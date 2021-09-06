@@ -2,11 +2,11 @@
 
 Make field study easier to conduct!
 
+[![THUIR](https://img.shields.io/badge/THUIR-ver%201.0-blueviolet)](www.thuir.cn)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-red.svg)](#python)
 [![made-with-js](https://img.shields.io/badge/Made%20with-JS-yellow.svg)](#javascript)
 [![code-size](https://img.shields.io/github/languages/code-size/xuanyuan14/Web-Search-Field-Study-Toolkit?color=green)]()
-[![THUIR](https://img.shields.io/badge/THUIR-ver%201.0-blueviolet)](www.thuir.cn)
 
 ## Introduction
 This codebase contains source-code of the field study platform of our WWW 2021 paper.
@@ -30,7 +30,7 @@ Fow now, this toolkit only support the logging on Baidu and Sogou, which are two
 ```bash
 python manage.py runserver 0.0.0.0:8000
 ```
-* Then, install the chrome extension on your Google chrome.
+* Then, install the chrome extension on your Google chrome.  
 ![image](https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/install.png)
 * Login the annotation platform server and register a new account.
 * Click the extension logo and login with the account.
@@ -41,7 +41,7 @@ python manage.py runserver 0.0.0.0:8000
 ```javascript
 var baseUrl = "http://127.0.0.1:8000";
 ```  
-* You should ensure that the chrome extention is on before the search, or nothing will be recorded.
+* You should ensure that the chrome extention is on before the search, or nothing will be recorded.  
 ![image](https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/on.png)
 * There may be problems in query recording if search users submit queries very frequently, e.g., submit two queries within 1 second. Please ask the participants to search with normal speed. We also welcome anyone to fix this bug.
 * Each query that has been recorded should be annotated within **48** hours, or they will be removed in case that users have forgotten the search details.
