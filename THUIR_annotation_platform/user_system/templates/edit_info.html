@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %} 修改用户信息  {% endblock %}
+
+{% block content %}
+    <div class="row text-center">
+        <h3>
+            修改用户信息
+        </h3>
+    </div>
+    <div class="row">
+    <div class="col-xs-offset-3 col-xs-6">
+    <div class="login-form">
+        <form id="login_form" name="login_form" action="" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                {{ form.name }}
+                <label class="login-field-icon fui-user"></label>
+            </div>
+
+            <div class="form-group">
+                {{ form.sex }}
+                <label class="login-field-icon fui-user"></label>
+            </div>
+
+            <div class="form-group">
+                {{ form.age }}
+                <label class="login-field-icon fui-calendar"></label>
+            </div>
+
+            <div class="form-group">
+                {{ form.phone }}
+                <label class="login-field-icon fui-chat"></label>
+            </div>
+
+            <div class="form-group">
+                {{ form.email }}
+                <label class="login-field-icon fui-mail"></label>
+            </div>
+
+            <div class="form-group">
+                {{ form.field }}
+                <label class="login-field-icon fui-search"></label>
+            </div>
+
+            <div class="form-group">
+                <label>使用搜索引擎的频率</label>
+                {{ form.search_frequency }}
+            </div>
+
+            <div class="form-group">
+                <label>使用搜索引擎的历史</label>
+                {{ form.search_history }}
+            </div>
+            {% if error_message %}
+            <div class="login_error_message">
+                {{ error_message }}
+            </div>
+            {% endif %}
+
+            <a id="login_button" class="btn btn-primary btn-lg btn-block" href="#">提交</a>
+        </form>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        (function() {
+            $('#login_button').click(function(e) {
+                e.preventDefault();
+                document.login_form.submit();
+            });
+        })();
+    </script>
+{% endblock %}

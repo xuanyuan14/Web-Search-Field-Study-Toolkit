@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户界面</title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body style="min-width: 150px;">
+<div id="login">
+    <label for="username">用户名</label>
+    <input id="username" name="username">
+    <br/>
+    <label for="psw">密码</label>
+    <input id="psw" name="psw" type="password">
+    <br/>
+    <br/>
+    <button id="bt2" style="width: 90%;">登录</button>
+    <br/>
+    <br/>
+    <button id="bt1" style="width: 90%;">新用户注册</button>
+    <br/>
+    <br/>
+    <button id="bt4" style="width: 90%;">前往标注系统</button>
+    <p id="failMsg1" hidden style="color:red">用户名不存在</p>
+
+    <p id="failMsg2" hidden style="color:red">密码错误</p>
+
+    <p id="failMsg3" hidden style="color:red">请求失败，请刷新页面后重试</p>
+</div>
+<div id="logged">
+    <button id="bt8" style="width: 90%;">前往标注系统</button>
+    <br/>
+    <br/>
+    <button id="bt6" style="width: 90%;">退出登录</button>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

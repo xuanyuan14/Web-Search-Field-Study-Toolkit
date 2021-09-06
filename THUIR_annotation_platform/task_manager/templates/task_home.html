@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %} 标注主页 {% endblock %}
+{% block content_title %} 标注主页 {% endblock %}
+{% block content %}
+    <div class="row text-center">
+        <h3>
+            标注主页
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-6 user_info">
+            <div class="user_info_row row">
+                <div class="info_label col-xs-offset-0 col-xs-12">
+                    你好, {{ cur_user.username }}, 你目前的标注情况如下:
+                </div>
+            </div>
+            <div class="user_info_row row">
+                <div class="info_label col-xs-offset-0 col-xs-6">
+                    已标注查询数量:
+                </div>
+                <div class="info_value col-xs-offest-6 col-xs-6">
+                    {{ annotation_num }}
+                </div>
+            </div>
+            <div class="user_info_row row">
+                <div class="info_label col-xs-offset-0 col-xs-6">
+                    已分组但未标注查询数量:
+                </div>
+                <div class="info_value col-xs-offest-6 col-xs-6">
+                    {{ partition_num }}
+                </div>
+            </div>
+            <div class="user_info_row row">
+                <div class="info_label col-xs-offset-0 col-xs-6">
+                    未分组查询数量:
+                </div>
+                <div class="info_value col-xs-offest-6 col-xs-6">
+                    {{ remain_num }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="col-xs-offset-3 col-xs-6">
+        <div id="go-partition-btn" class="col-xs-12 submit-btn btn btn-block btn-lg btn-primary">
+            点击此处去对查询进行分组
+        </div>
+        <div id="go-annotation-btn" class="col-xs-12 submit-btn btn btn-block btn-lg btn-primary">
+            点击此处去对已分组查询进行标注
+        </div>
+    </div>
+    <script>
+        $(function() {
+            $('#go-partition-btn').click(
+                function () {
+                    window.location.href = '/task/partition';
+                }
+            );
+            $('#go-annotation-btn').click(
+                function () {
+                    window.location.href = '/task/annotation';
+                }
+            );
+        });
+    </script>
+
+{% endblock %}

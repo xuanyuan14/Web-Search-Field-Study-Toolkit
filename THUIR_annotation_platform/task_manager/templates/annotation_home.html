@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Annotation Task {% endblock %}
+{% block content_title %} Annotation Task {% endblock %}
+{% block content %}
+    <div class="row text-center">
+        <h3>
+            Task Annotation
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-5">
+            <div class="col-xs-12 list_header">
+                Uncompleted Tasks
+            </div>
+            {% for task_id, queries in unannotated_tasks_to_queries %}
+                <div class="col-xs-12 list_row">
+                    <a href="/task/task_annotation1/{{ task_id }}" class="col-xs-4 submit-btn btn btn-primary">
+                        Go to Annotate -> Task ID: {{ task_id }}
+                    </a>
+                    <ul>
+                    {% for query in queries %}
+                        <li class="col-xs-12">{{ query.query_string }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-xs-5">
+            <div class="col-xs-12 list_header">
+                Completed Tasks
+            </div>
+            {% for task_id, queries in annotated_tasks_to_queries %}
+                <div class="col-xs-12 list_row">
+                    Task ID: {{ task_id }}
+                    <ul>
+                    {% for query in queries %}
+                        <li class="col-xs-12">{{ query.query_string }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

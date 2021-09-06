@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} base {% endblock %}</title>
+    <link rel="icon" href="/static/img/IR4.png" type="image/png"/>
+
+    <!-- Loading Bootstrap -->
+    <link href="/static/flat-ui/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="/static/flat-ui/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+    <!-- Loading Jquery -->
+    <script src="/static/flat-ui/js/vendor/jquery.min.js"></script>
+    <style>
+    {% block css %}
+    {% endblock %}
+    </style>
+    <style>html { overflow-x:hidden; }</style>
+</head>
+<body>
+    <header>
+    <div class="container-fluid">
+        <div class="col-xs-12">
+          <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+              <span class="navbar-brand" href="#">THUIR Annotation Platform</span>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse-01">
+              <ul class="nav navbar-nav navbar-right">
+                  {% if cur_user %}
+                      <li><a href="/task/home/">
+                          <span class="fui-home"></span>
+                          Homepage
+                      </a></li>
+                      <li><a href="/task/partition/">
+                          <span class="fui-folder"></span>
+                          Query Grouping
+                      </a></li>
+                      <li><a href="/task/annotation/">
+                          <span class="fui-star-2"></span>
+                          Task Annotation
+                      </a></li>
+                      <li><a href="/user/info/">
+                          <span class="fui-info-circle"></span>
+                          User Info
+                      </a></li>
+                      <li><a href="/user/logout/">
+                          <span class="fui-cross-circle"></span>
+                          Logout
+                      </a></li>
+                  {% else %}
+                      <li><a href="/user/login/">
+                          <span class="fui-user">
+                          </span>
+                          Login
+                      </a></li>
+                  {% endif %}
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </nav><!-- /navbar -->
+        </div>
+    </div>
+    </header>
+
+    <section>
+    <div class="container" style="width: 100%">
+            {% block content %}
+                This is content!
+            {% endblock %}
+    </div>
+    <br />
+    <br />
+    </section>
+
+    <script src="/static/flat-ui/js/vendor/jquery.min.js"></script>
+    <script src="/static/flat-ui/js/flat-ui.min.js"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

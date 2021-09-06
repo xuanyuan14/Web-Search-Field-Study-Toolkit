@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %} Query Expectation Annotation {% endblock %}
+{% block content_title %} Query Expectation Annotation {% endblock %}
+{% block content %}
+    <div class="row text-center">
+        <h3>
+            Please annotation the expectations for this query as follows
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-10">
+            <form class="col-xs-12" id="query-form" action="" method="post" onsubmit="validateForm()" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <div class="col-xs-12" style="border:1px dashed #000; border-radius:10px">
+                    <label for="diversity_ratio" class="ratio col-xs-12 list_row">1. <b>Diversity</b>：How many topics do you expect the results of this query to include? (For example, if you search for "COVID-19", you want to know the latest data on COVID-19 and the latest policies on COVID-19, and you expect the search engine to return results related to both topics.)</label>
+                        <div class="ratio col-xs-12 list_row">
+                            <span style="display:flex;">One topic <input type="range" style="width: 20%" name="diversity" min="1" max="5" value="1" step="1" list="diversity_marks" oninput="setDiversity()" onchange="setDiversity()"/> Five and more (Current choice<b><span id="diversity_value" >1</span></b>)</span><br>
+                            <datalist id="diversity_marks">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </datalist>
+                        </div>
+                    <label for="habit_ratio" class="ratio col-xs-12 list_row">2. <b>Result Type</b>：Which of the following result types do you expect to be returned by this query? (Multiple options)</label>
+                        <div class="ratio col-xs-12 list_row">
+                            <label><input type="checkbox" name="habit" value="1"/> 1. Wikipedia type </label>
+                            <label><input type="checkbox" name="habit" value="2"/> 2. Image type </label>
+                            <label><input type="checkbox" name="habit" value="3"/> 3. Video type </label>
+                            <label><input type="checkbox" name="habit" value="4"/> 4. Experience type </label><br>
+                            <label><input type="checkbox" name="habit" value="5"/> 5. Map type </label>
+                            <label><input type="checkbox" name="habit" value="6"/> 6. Aggregated type </label>
+                            <label><input type="checkbox" name="habit" value="7"/> 7. Card type </label>
+                            <label><input type="checkbox" name="habit" value="0"/> 0. Others </label><br>
+                        </div>
+                    <input id="habit_str" type="hidden" name="habit_str">
+                    <label for="redundancy_ratio" class="ratio col-xs-12 list_row">3. <b>Redundancy</b>：How do you expect the redundancy of the results？</label>
+                        <div class="ratio col-xs-12 list_row">
+                            <label><input type="radio" name="redundancy" value="0"/> 0：All similar</label><br>
+                            <label><input type="radio" name="redundancy" value="1"/> 1：Minority of the results are different</label><br>
+                            <label><input type="radio" name="redundancy" value="2"/> 2：Half of the results is different</label><br>
+                            <label><input type="radio" name="redundancy" value="3"/> 3：Majority of the results are different</label><br>
+                            <label><input type="radio" name="redundancy" value="4"/> 4：All results are different</label><br>
+                        </div>
+                    <label for="difficulty_ratio" class="ratio col-xs-12 list_row">4. <b>Difficulty</b>：How do you expect the difficulty of the search process？</label>
+                        <div class="ratio col-xs-12 list_row">
+                            <label><input type="radio" name="difficulty" value="0"/> 0：Very easy</label><br>
+                            <label><input type="radio" name="difficulty" value="1"/> 1：Easy</label><br>
+                            <label><input type="radio" name="difficulty" value="2"/> 2：A little bit difficult</label><br>
+                            <label><input type="radio" name="difficulty" value="3"/> 3：Difficult</label><br>
+                            <label><input type="radio" name="difficulty" value="4"/> 4：Very difficulty</label><br>
+                        </div>
+                    <label for="gain_ratio" class="ratio col-xs-12 list_row">5. <b>Number of relevant results</b>：How many relevant results do you expect to find in this query? (If you want to search for weather in Beijing today, for example, you might expect to find only one relevant result; And if you want to search for places for an autumn trip in Beijing, you might expect to find four or five relevant results.)</label>
+                        <div class="ratio col-xs-12 list_row">
+                            <span style="display:flex;">One relevant result <input type="range" style="width: 40%" name="gain" min="1" max="10" value="1" step="1" list="gain_marks" oninput="setGain()" onchange="setGain()"/> Ten or more (Current choice<b><span id="gain_value" >1</span></b>)</span><br>
+                            <datalist id="gain_marks">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </datalist>
+                        </div>
+                    <label for="effort_ratio" class="ratio col-xs-12 list_row">6. <b>Engagement</b>：How much time do you expect to spend searching for relevant information in this query? (Note that the time you spend finding the relevant information and using it to complete your task is not included. For example, if you want to watch a movie, the time you spend watching a movie after finding the movie is not included.)</label>
+                        <div class="ratio col-xs-12 list_row">
+                            <span style="display:flex;">One minute <input type="range" style="width: 40%" name="effort" min="1" max="10" value="1" step="1" list="effort_marks" oninput="setEffort()" onchange="setEffort()"/> Ten minutes or more (Current choice<b><span id="effort_value" >1</span></b>)</span><br>
+                            <datalist id="effort_marks">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </datalist>
+                        </div>
+                </div>
+                <div class="col-xs-12"><br/></div>
+
+            </form>
+            <div class="col-xs-12">
+                <div id="query-btn" class="col-xs-6 submit-btn btn btn-block btn-lg btn-primary">
+                    Submit
+                </div>
+            </div>
+        </div>
+        <script>
+        </script>
+        <script>
+		    function setDiversity(){
+		        var diversity_val = document.getElementById("diversity_value");
+		        diversity_val.innerText = document.getElementsByName("diversity")[0].value;
+            }
+            function setEffort(){
+		        var effort_val = document.getElementById("effort_value");
+		        effort_val.innerText = document.getElementsByName("effort")[0].value;
+            }
+            function setGain(){
+                var gain_val = document.getElementById("gain_value");
+		        gain_val.innerText = document.getElementsByName("gain")[0].value;
+            }
+            function validateForm() {
+                var checks = $('input[type="checkbox"]:checked').map(function() {
+                    return $(this).val();
+                }).get();
+                $("#habit_str").val(checks);
+            }
+
+	    </script>
+        <script type="application/x-javascript">
+            $(function () {
+                $('#query-btn').click(
+                        function () {
+                            var habit = $("[name='habit']:checked");
+                            var redundancy = $("[name='redundancy']:checked");
+                            var difficulty = $("[name='difficulty']:checked");
+                            if (habit.val() == null) {
+                                alert('Please choose a result type!');
+                                $("[name='habit]").focus();
+                                return
+                            }
+                            if (redundancy.val() == null) {
+                                alert('Please check a redundancy button!');
+                                $("[name='redundancy']").focus();
+                                return
+                            }
+                            if (difficulty.val() == null) {
+                                alert('Please check a difficulty button!');
+                                $("[name='difficulty']").focus();
+                                return
+                            }
+
+                            if (confirm("Are you sure to submit all annotations?")) {
+                                $('#query-form').submit();
+                            }
+
+                        }
+                );
+            });
+        </script>
+    </div>
+
+{% endblock %}

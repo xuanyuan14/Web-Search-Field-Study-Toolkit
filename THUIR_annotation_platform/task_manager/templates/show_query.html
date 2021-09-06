@@ -1,0 +1,11 @@
+{{ html | safe }}
+<script>
+    var baidu_query = document.getElementById("kw");
+    var sogou_query = document.getElementById("upquery");
+    if (baidu_query != undefined) {
+        baidu_query.setAttribute('value', "{{ query}}");
+    }
+    if (sogou_query != undefined) {
+        sogou_query.setAttribute('value', "{{ query}}");
+    }
+</script>

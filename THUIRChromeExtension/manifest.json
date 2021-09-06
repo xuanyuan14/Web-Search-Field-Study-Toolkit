@@ -1,0 +1,76 @@
+{
+  "name": "THUIR Chrome Extension",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "A simple chrome extension to collect user behaviors in a field study",
+  "icons": {
+    "16": "popup/THUIR16.png",
+    "32": "popup/THUIR32.png",
+    "64": "popup/THUIR64.png",
+    "128": "popup/THUIR128.png"
+  },
+  "browser_action": {
+    "default_title": "THUIR实验插件",
+    "default_icon": "popup/THUIR19.png",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "*://*/*",
+    "unlimitedStorage",
+    "storage",
+    "cookies",
+    "notifications"
+  ],
+  "background": {
+    "scripts": [
+      "jquery-3.3.1.min.js",
+      "pako_deflate.min.js",
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "jquery-3.3.1.min.js",
+        "pako_deflate.min.js",
+        "mouseMove.js",
+        "basic.js",
+        "page.js",
+        "content.js",
+        "general.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.baidu.com/s*"
+      ],
+      "js": [
+        "baidu.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.sogou.com/web*"
+      ],
+      "js": [
+        "sogou.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.so.com/s*"
+      ],
+      "js": [
+        "360.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

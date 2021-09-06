@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %} 查询分组 {% endblock %}
+{% block content_title %} 查询分组 {% endblock %}
+{% block content %}
+    <div class="row text-center">
+        <h3>
+            查询分组
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-5">
+            <div class="col-xs-12 list_header">
+                未分组查询
+            </div>
+                <label for="unpartition_queries">可对未分组查询进行分组,也可删除查询(删除后的查询不会被记录)</label>
+            <div class="col-xs-12">
+                <div id="partition-btn" class="col-xs-6 submit-btn btn btn-block btn-lg btn-primary">
+                    查询分组
+                </div>
+                <div id="delete-btn" class="col-xs-6 submit-btn btn btn-block btn-lg btn-primary">
+                    删除查询
+                </div>
+            </div>
+            <form class="col-xs-12" id="unpartition-form" action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action_type" value="partition">
+                {% for query, pages in unpartition_queries_to_pages %}
+                    <div class="checkbox col-xs-12 list_row">
+                        <label><input type="checkbox" name="unpartition_checkbox"
+                                      value="{{ query.id }}">{{ query.query_string }}</label>
+                        <ul>
+                            {% for page in pages %}
+                                <li>第{{ page.page_id }}页<a href="/task/show_page/{{ page.id }}" target="_blank">(点击查看)</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+        <div class="col-xs-5">
+            <div class="col-xs-12 list_header">
+                已分组查询
+            </div>
+                <label for="partition_queries">可对已分组查询取消分组</label>
+            <div class="col-xs-12">
+                <div id="unpartition-btn" class="col-xs-6 submit-btn btn btn-block btn-lg btn-primary">
+                    取消分组
+                </div>
+            </div>
+            <form class="col-xs-12" id="partition-form" action="" method="post" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <input type="hidden" name="action_type" value="unpartition">
+                {% for task_id, queries in partition_tasks_to_queries %}
+                    <div class="checkbox col-xs-12 list_row">
+                        <label class="col-xs-12"><input type="checkbox" name="partition_checkbox" value="{{ task_id }}">任务{{ task_id }}</label>
+                        <ul>
+                            {% for query in queries %}
+                                <li class="col-xs-12">{{ query.query_string }}</li>
+                            {% endfor %}
+                        </ul>
+                        <a href="/task/task_annotation1/{{ task_id }}" class="col-xs-12">点击此处可立即对该任务进行标注</a>
+                    </div>
+
+                {% endfor %}
+            </form>
+        </div>
+        <script>
+            $(function () {
+                $('#partition-btn').click(
+                        function () {
+                            $("input[name='action_type']").val("partition");
+                            $('#unpartition-form').submit();
+                        }
+                );
+                $('#delete-btn').click(
+                        function () {
+                            if (confirm("确定要删除这些查询吗?删除后将不可恢复")) {
+                                $("input[name='action_type']").val("delete");
+                                $('#unpartition-form').submit();
+                            }
+                        }
+                );
+                $('#unpartition-btn').click(
+                        function () {
+                            if (confirm("确定要对这些任务取消分组吗?")) {
+                                $('#partition-form').submit();
+                            }
+                        }
+                );
+            });
+        </script>
+    </div>
+
+{% endblock %}

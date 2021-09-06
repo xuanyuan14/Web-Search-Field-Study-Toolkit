@@ -1,0 +1,44 @@
+section {
+    /*min-height: 1000px;*/
+}
+
+/*.annotation-content {
+    min-width: 960px;
+}*/
+
+.login_error_message {
+    border: solid 2px red;
+    background: lightpink;
+    border-radius: 4px;
+    padding: 0px 10px 0px 10px;
+    margin: 10px 0px 10px 0px;
+    color: red;
+    font-size: smaller;
+}
+
+.user_info {
+    background: #edeff1;
+    border-radius: 4px;
+    padding: 24px 23px 20px;
+}
+
+.list_header {
+    background: #edeff1;
+    border-bottom: 2px solid #2f4154;
+}
+
+.list_row {
+    font-size: smaller;
+    padding: 2px;
+}
+
+.row2 {
+    background: #edeff1;
+}
+
+.control_panel {
+    background: #edeff1;
+    border-top: 2px solid #2f4154;
+    border-radius: 0 0 4px 4px;
+    margin-bottom: 10px;
+}

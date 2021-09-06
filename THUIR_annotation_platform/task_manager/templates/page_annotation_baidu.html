@@ -1,0 +1,161 @@
+{{ html | safe }}
+<script>
+
+    var content_left = $("#content_left").children();
+    var result_ids = new Array();
+    $("#content_left").children(".c-container").each(function (id, element) {
+        result_ids.push($(element).attr("id"));
+    });
+{#    var start_result_id = result_ids[0];#}
+    var content_right = $("#content_right");
+{#    if (content_right == undefined){#}
+{#        content_right = document.createElement("div");#}
+{#        content_right.setAttribute("id", "content_right");#}
+{#        content_right.setAttribute("class", "cr-offset");#}
+{#        content_right.setAttribute("style", "padding-left:17px, display:block");#}
+{#        #}
+{#    }#}
+{#    content_right.setAttribute("style", "padding-left:17px, display:block");#}
+    var rrecom = $("body").children(".result-op");
+    rrecom.remove();
+    content_right.empty();
+    document.getElementById("kw").setAttribute('value', "{{ query}}");
+
+    content_right.append("<div style='width: 540px'><b>1. The left side of the page is the search results, please drag the results you think are helpful in the search process to the corresponding position on the right side according to their usefulness; For results that you haven't seen or that you don't think will help you at all, you don't need to drag. To help you recall the search process, we've highlighted the results you clicked on below the results, but that doesn't mean you have to drag them.)</b></div><br />");
+    for (var i = 3; i > 0; i--) {
+        var usefulness = "";
+        switch (i) {
+            case 3:
+                usefulness = "<div class='usefulness' id='serendipity' style='height: auto; width: 540px; border:1px dashed #000; border-radius:10px' draggable='true'>Please drag the results that you think would be very helpful and bring you surprise here.</div><br /><br />";
+                break;
+            case 2:
+                usefulness = "<div class='usefulness' id='usefulness_2' style='height: auto; width: 540px; border:1px dashed #000; border-radius:10px' draggable='true'>Please drag the results that you think would be very helpful here.</div><br /><br />";
+                break;
+            case 1:
+                usefulness = "<div class='usefulness' id='usefulness_1' style='height: auto; width: 540px; border:1px dashed #000; border-radius:10px' draggable='true'>Plaese drag the results here that you think are partially helpful here.</div><br /><br />";
+                break;
+            default:
+                break;
+        }
+        content_right.append(usefulness);
+    }
+
+    content_right.append("<div class='col-xs-12'><div id='page-btn' class='col-xs-6' style='border: 1px solid transparent;border-radius: 10px;font-size: 13px;padding: 6px 12px;text-align: center;color: #fff;background-color: #1abc9c;border-color: #1abc9c'>Submit</div></div>");
+
+    var dragElement = null;
+    for (var i = 0; i < content_left.length; i++) {
+        if ($(content_left[i]).hasClass("c-container")) {
+            content_left[i].setAttribute("draggable", true);
+            content_left[i].addEventListener('dragstart', function (ev) {
+                dragElement = this;
+            }, false);
+
+            content_left[i].addEventListener('dragenter', function (ev) {
+                if (dragElement != this) {
+                    this.parentNode.insertBefore(dragElement, this);
+                }
+            }, false);
+
+            content_left[i].addEventListener('dragleave', function (ev) {
+                if (dragElement != this) {
+                    if (this == this.parentNode.lastElementChild || this == this.parentNode.lastChild) {
+                        this.parentNode.appendChild(dragElement);
+                    }
+                }
+            }, false);
+        }
+        else {
+            content_left[i].remove();
+        }
+    }
+
+    var usefulness_divs = $("div.usefulness");
+    for (var i = 0; i < usefulness_divs.length; i++) {
+        usefulness_divs[i].addEventListener('dragenter', function (ev) {
+            if (dragElement != this && $(this).children().length == 0) {
+                this.appendChild(dragElement);
+            }
+        }, false);
+    }
+
+    {% for id in clicked_ids %}
+        var click_result = $("#" +{{ id }});
+        click_result.append("<h3><mark>Note: You have clicked on this result before in your search.</mark></h3>");
+    {% endfor %}
+
+    $('#page-btn').click(
+            function () {
+                if (confirm("Are you sure to submit the annotation?")) {
+                    var message = "";
+
+                    var usefulness_0 = new Array();
+                    var serendipity = new Array();
+                    var max_result_id = -1, min_result_id = 100000;
+                    $("#content_left").children(".c-container").each(function (id, element) {
+                        var result_id = $(element).attr("id");
+                        if (Number(result_id) > max_result_id) {
+                            max_result_id = Number(result_id);
+                        }
+                        if (Number(result_id) < min_result_id) {
+                            min_result_id = Number(result_id);
+                        }
+                        usefulness_0.push(result_id);
+                    });
+                    message += usefulness_0.join();
+                    for (var score = 1; score < 3; score++) {
+                        var usefulness = new Array();
+                        $("#usefulness_" + score).children(".c-container").each(function (id, element) {
+                            var result_id = $(element).attr("id");
+                            if (Number(result_id) > max_result_id) {
+                                max_result_id = Number(result_id);
+                            }
+                            if (Number(result_id) < min_result_id) {
+                                min_result_id = Number(result_id);
+                            }
+                            usefulness.push(result_id);
+                        });
+                        message += "\t" + usefulness.join();
+                    }
+
+                    // 添加serendipity
+                    message += "#";
+                    $("#serendipity").children(".c-container").each(function (id, element) {
+                            var result_id = $(element).attr("id");
+                            if (Number(result_id) > max_result_id) {
+                                max_result_id = Number(result_id);
+                            }
+                            if (Number(result_id) < min_result_id) {
+                                min_result_id = Number(result_id);
+                            }
+                            serendipity.push(result_id);
+                        });
+                    message += serendipity.join()
+
+                    var host = window.location.hostname;
+                    var port = window.location.port;
+                    var submit_url = "http://" + host + ":" + port + "/task/page_annotation_submit/" + {{ page_id }} +"/";
+                    $.ajax({
+                        type: 'POST',
+                        dataType: "text",
+                        url: submit_url,
+                        data: {message: message},
+                        async: false,
+                        success: function (data, textStatus) {
+                            console.log(data);
+                            window.close();
+                        },
+                        error: function () {
+                            console.log('error');
+                        }
+                    });
+                }
+            }
+    );
+
+    document.ondragover = function (e) {
+        e.preventDefault();
+    };
+    document.ondrop = function (e) {
+        e.preventDefault();
+    };
+</script>

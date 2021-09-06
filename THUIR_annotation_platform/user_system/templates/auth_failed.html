@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %} 用户信息  {% endblock %}
+
+{% block content %}
+    <div class="row text-center">
+        <h3>
+           权限不足
+        </h3>
+    </div>
+    <div class="row">
+    <div class="col-xs-offset-3 col-xs-6 user_info">
+        <div class="user_info_row row">
+            <div class="info_label col-xs-offset-0 col-xs-6">
+                用户名:
+            </div>
+            <div class="info_value col-xs-offest-6 col-xs-6">
+                {{ cur_user.username }}
+            </div>
+        </div>
+
+        <div class="user_info_row row">
+            <div class="info_label col-xs-offset-0 col-xs-6">
+                需要权限:
+            </div>
+            <div class="info_value col-xs-offest-6 col-xs-6">
+                {{ missing_group_string }}
+            </div>
+        </div>
+
+        <div class="user_info_row row">
+            <div class="info_label col-xs-offset-0 col-xs-6">
+                用户当前权限:
+            </div>
+            <div class="info_value col-xs-offest-6 col-xs-6">
+                {{ user_group_string }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-offset-3 col-xs-6">
+                <a href="/user/login/" class="btn btn-block btn-lg btn-primary">切换用户</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+
+

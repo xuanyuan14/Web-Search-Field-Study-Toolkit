@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %} 任务描述 {% endblock %}
+{% block content_title %} 任务描述 {% endblock %}
+{% block content %}
+    <div class="row text-center">
+        <h3>
+            任务描述
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-1 col-xs-5">
+            <div class="col-xs-12 list_header">
+                该任务下查询词
+            </div>
+            {% for query, pages in queries_to_pages %}
+                <div class="col-xs-12 list_row">
+                    <label>{{ query.query_string }}</label>
+                    <ul>
+                        {% for page in pages %}
+                            <li>第{{ page.page_id }}页<a href="/task/show_page/{{ page.id }}" target="_blank">(点击查看)</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+            <div class="col-xs-12 list_row"></div>
+            <div class="col-xs-12 list_header">
+                任务标注指导
+            </div>
+            <div class="col-xs-12 list_row">
+                关于此次搜索任务，需要记录一些信息，包括<b>搜索背景</b>以及你的<b>搜索意图</b>，
+                在进行标注之前请确认您已熟悉下列标注说明和标注标准。
+                <ul>
+                    <li><b>搜索背景</b></li>
+                        <ul>
+                            <li><b>时间是否充裕</b></li>
+                            <li><b>所处地点是否安静</b></li>
+                        </ul>
+                    <li><b>搜索意图</b></li>
+                        <ul>
+                            <li><b>查询意图是否明确</b>，例如：<br><i>&diams; 你只想要搜索关于圣诞主题的海报 → 非常明确(4)；<br>&diams; 你想要搜索圣诞主题，但是会搜索各种信息 → 比较明确(2-3)；<br>&diams; 你会搜索各种话题的信息 → 比较宽泛(0-1);</i></li>
+                            <li><b>是什么激发了你的查询意图，是兴趣还是任务</b>，例如：<br><i>&diams; 你突然对某位名人感兴趣 → 兴趣驱动为主(0-1)；<br>&diams; 夏天到了，你想要购买一件新衣服 → 兴趣以及任务驱动(2)；<br>&diams; 你想要搜索相关信息来完成作业 → 任务驱动为主(3-4)；</i></li>
+                            <li><b>对于该搜索任务的整体熟悉程度</b></li>
+                        </ul>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <div class="col-xs-12 list_header">
+                请回顾此次搜索任务发生的时间地点，选择合适的选项
+            </div>
+            <form class="col-xs-12" id="description-form" action="" method="post">
+                {% csrf_token %}
+                <label for="time_condition" class="ratio col-xs-12 list_row"><b>1. 你在搜索此次任务时时间很紧张，需要马上完成搜索解决问题，0→4对应：完全不同意→完全同意</b></label>
+                    <div class="ratio col-xs-12 list_row">
+                        <label><input type="radio" name="time_condition_{{ task.id }}" value="0"/> 0&emsp; </label>
+                        <label><input type="radio" name="time_condition_{{ task.id }}" value="1"/> 1&emsp;  </label>
+                        <label><input type="radio" name="time_condition_{{ task.id }}" value="2"/> 2&emsp;  </label>
+                        <label><input type="radio" name="time_condition_{{ task.id }}" value="3"/> 3&emsp;  </label>
+                        <label><input type="radio" name="time_condition_{{ task.id }}" value="4"/> 4&emsp;  </label>
+                    </div>
+                <script>
+                    $("input:radio[name='time_condition_{{ task.id }}'][value='{{ task.time_condition }}']").attr('checked','true');
+                </script>
+                <label for="position_condition" class="ratio col-xs-12 list_row"><b>2. 你在搜索此次任务时周围环境很嘈杂，非常影响你在搜索上的注意力，0→4对应：完全不同意→完全同意</b></label>
+                    <div class="ratio col-xs-12 list_row">
+                        <label><input type="radio" name="position_condition_{{ task.id }}" value="0"/> 0&emsp; </label>
+                        <label><input type="radio" name="position_condition_{{ task.id }}" value="1"/> 1&emsp;  </label>
+                        <label><input type="radio" name="position_condition_{{ task.id }}" value="2"/> 2&emsp;  </label>
+                        <label><input type="radio" name="position_condition_{{ task.id }}" value="3"/> 3&emsp;  </label>
+                        <label><input type="radio" name="position_condition_{{ task.id }}" value="4"/> 4&emsp;  </label>
+                    </div>
+                <script>
+                    $("input:radio[name='position_condition_{{ task.id }}'][value='{{ task.position_condition }}']").attr('checked','true');
+                </script>
+                <label for="specificity" class="ratio col-xs-12 list_row"><b>3. 搜索意图明确性，0→4对应：非常宽泛→非常明确</b></label>
+                    <div class="ratio col-xs-12 list_row">
+                        <label><input type="radio" name="specificity_{{ task.id }}" value="0"/> 0&emsp; </label>
+                        <label><input type="radio" name="specificity_{{ task.id }}" value="1"/> 1&emsp;  </label>
+                        <label><input type="radio" name="specificity_{{ task.id }}" value="2"/> 2&emsp;  </label>
+                        <label><input type="radio" name="specificity_{{ task.id }}" value="3"/> 3&emsp;  </label>
+                        <label><input type="radio" name="specificity_{{ task.id }}" value="4"/> 4&emsp;  </label>
+                    </div>
+                <script>
+                    $("input:radio[name='specificity_{{ task.id }}'][value='{{ task.specificity }}']").attr('checked','true');
+                </script>
+                <label for="trigger" class="ratio col-xs-12 list_row"><b>4. 什么触发了您本次搜索，数值越小表示由兴趣触发程度越大，数值越大表示由任务触发的程度越大，0→4对应：完全兴趣驱动→完全任务驱动</b></label>
+                    <div class="ratio col-xs-12 list_row">
+                        <label><input type="radio" name="trigger_{{ task.id }}" value="0"/> 0&emsp; </label>
+                        <label><input type="radio" name="trigger_{{ task.id }}" value="1"/> 1&emsp;  </label>
+                        <label><input type="radio" name="trigger_{{ task.id }}" value="2"/> 2&emsp;  </label>
+                        <label><input type="radio" name="trigger_{{ task.id }}" value="3"/> 3&emsp;  </label>
+                        <label><input type="radio" name="trigger_{{ task.id }}" value="4"/> 4&emsp;  </label>
+                    </div>
+                <script>
+                    $("input:radio[name='trigger_{{ task.id }}'][value='{{ task.trigger }}']").attr('checked','true');
+                </script>
+                <label for="expertise" class="ratio col-xs-12 list_row"><b>5. 在查询之前您对于整个搜索任务的熟悉程度，0→4对应：非常不熟悉→非常熟悉</b></label>
+                    <div class="ratio col-xs-12 list_row">
+                        <label><input type="radio" name="expertise_{{ task.id }}" value="0"/> 0&emsp; </label>
+                        <label><input type="radio" name="expertise_{{ task.id }}" value="1"/> 1&emsp;  </label>
+                        <label><input type="radio" name="expertise_{{ task.id }}" value="2"/> 2&emsp;  </label>
+                        <label><input type="radio" name="expertise_{{ task.id }}" value="3"/> 3&emsp;  </label>
+                        <label><input type="radio" name="expertise_{{ task.id }}" value="4"/> 4&emsp;  </label>
+                    </div>
+                <script>
+                    $("input:radio[name='expertise_{{ task.id }}'][value='{{ task.expertise }}']").attr('checked','true');
+                </script>
+            </form>
+            <div class="col-xs-12">
+                <div id="description-btn" class="col-xs-12 submit-btn btn btn-primary">
+                    提交任务描述
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                $('#description-btn').click(
+                        function () {
+                            var time_condition = $("[name='time_condition_{{ task.id }}']:checked");
+                            var position_condition = $("[name='position_condition_{{ task.id }}']:checked");
+
+                            var specificity = $("[name='specificity_{{ task.id }}']:checked");
+                            var trigger = $("[name='trigger_{{ task.id }}']:checked");
+                            var expertise = $("[name='expertise_{{ task.id }}']:checked");
+
+                            if (time_condition.val() == null) {
+                                alert('请选择一个时间充裕程度!');
+                                $("[name='time_condition_{{ task.id }}']").focus();
+                                return
+                            }
+
+                            if (position_condition.val() == null) {
+                                alert('请选择一个场景安静程度!');
+                                $("[name='position_condition_{{ task.id }}']").focus();
+                                return
+                            }
+
+                            if (specificity.val() == null) {
+                                alert('请选择一个搜索意图明确性!');
+                                $("[name='specificity_{{ task.id }}']").focus();
+                                return
+                            }
+
+                            if (trigger.val() == null) {
+                                alert('请选择触发搜索的原因!');
+                                $("[name='trigger_{{ task.id }}']").focus();
+                                return
+                            }
+
+                            if (expertise.val() == null) {
+                                alert('请选择您对本任务的熟悉程度!');
+                                $("[name='expertise_{{ task.id }}']").focus();
+                                return
+                            }
+
+                            if (confirm("确认提交任务描述?"))
+                                $('#description-form').submit();
+                        }
+                );
+            });
+        </script>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %} 用户登录  {% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-xs-6 text-center">
+    <p>
+        <img src="/static/img/IR4.png"/>
+    </p>
+    <p>
+        <a href="http://www.thuir.org/">清华大学智能技术与系统国家重点实验室</br>信息检索组(THUIR)</a>
+    </p>
+</div>
+<div class="col-xs-6 pull-right">
+<div class="login-form">
+    <form id="login_form" name="login_form" action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.username }}
+          <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
+
+        <div class="form-group">
+            {{ form.password }}
+          <label class="login-field-icon fui-lock" for="login-pass"></label>
+        </div>
+
+        {% if error_message %}
+        <div class="login_error_message">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        <a id="login_button" class="btn btn-primary btn-lg btn-block" href="#">登录</a>
+        <a class="login-link" href="/user/forget_password/">忘记密码？</a>
+        <a class="login-link" href="/user/signup/">创建新账户</a>
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        (function() {
+            $('#login_button').click(function(e) {
+                e.preventDefault();
+                document.login_form.submit();
+            });
+        })();
+    </script>
+{% endblock %}
