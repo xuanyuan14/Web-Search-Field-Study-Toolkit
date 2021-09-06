@@ -31,8 +31,15 @@ Fow now, this toolkit only support the logging on Baidu and Sogou, which are two
 python manage.py runserver 0.0.0.0:8000
 ```
 * Then, install the chrome extension on your Google chrome.  
-![image](https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/install.png)
+
+<p align="center">
+  <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/install.png">
+</p>  
 * Login the annotation platform server and register a new account.
+
+<p align="center">
+  <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/login.png">
+</p>
 * Click the extension logo and login with the account.
 * Now, all things get ready! Just start your field study!
 
@@ -42,12 +49,28 @@ python manage.py runserver 0.0.0.0:8000
 var baseUrl = "http://127.0.0.1:8000";
 ```  
 * You should ensure that the chrome extention is on before the search, or nothing will be recorded.  
-![image](https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/on.png)
+
+<p align="center">
+  <img width="100" height="100" src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/on.png">
+</p>
+
 * There may be problems in query recording if search users submit queries very frequently, e.g., submit two queries within 1 second. Please ask the participants to search with normal speed. We also welcome anyone to fix this bug.
 * Each query that has been recorded should be annotated within **48** hours, or they will be removed in case that users have forgotten the search details.
 * It is normal to have error as follows when submitting the annotations for a query. Just return the previous page and submit again.
-![image](https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/error.png)
 
+<p align="center">
+  <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/error.png">
+</p>
+
+* For Baidu, you should ① shut down the instance predicton function and ② set all SERPs to be opened in a new window. Without these settings, search pages will be updated merely by in-page javascript functions and our toolkit will be failed to record correct information. 
+
+<p align="center">
+  <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/close.png">
+</p>
+
+<p align="center">
+  <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/setting.png">
+</p>
 
 ## Citation
 If you find the resources in this repo useful, please do not save your star and cite our work:
