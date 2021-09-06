@@ -19,10 +19,10 @@ This codebase contains source-code of the field study platform of our WWW 2021 p
 * Query-level and session level user satisfaction: both are 5-scale.
 * Search behavior log: such as mouse movement, search queries, and timestamps.
 
-You can add or delete any function on your need. BTW, we are delighted to introduce the dataset we collected via this toolkit: [TianGong-Qref](http://www.thuir.cn/tiangong-qref/). 
+You can add or delete any function on your need. BTW, we are delighted to introduce the dataset we collected via this toolkit: [TianGong-Qref](http://www.thuir.cn/tiangong-qref/). 🤠
 
 ## Support
-Fow now, this toolkit only support the logging on Baidu and Sogou, which are two largest commercial search engines in China. 
+Fow now, this toolkit only support the logging on Baidu and Sogou, which are two largest commercial search engines in China. We welcome anyone to implement the support for more search engines such as Google, Bing, Yahoo, and Naver.
 
 ## How to launch
 
@@ -35,12 +35,15 @@ python manage.py runserver 0.0.0.0:8000
 <p align="center">
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/install.png">
 </p>  
-* Login the annotation platform server and register a new account.
+
+* Login at the annotation platform (0.0.0.0:8000) and register a new account.
+
+* Click the extension logo and login with the account.
 
 <p align="center">
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/login.png">
 </p>
-* Click the extension logo and login with the account.
+
 * Now, all things get ready! Just start your field study!
 
 ## Something you should notice
@@ -51,7 +54,7 @@ var baseUrl = "http://127.0.0.1:8000";
 * You should ensure that the chrome extention is on before the search, or nothing will be recorded.  
 
 <p align="center">
-  <img width="100" height="100" src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/on.png">
+  <img width="50" height="50" src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/on.png">
 </p>
 
 * There may be problems in query recording if search users submit queries very frequently, e.g., submit two queries within 1 second. Please ask the participants to search with normal speed. We also welcome anyone to fix this bug.
@@ -62,7 +65,7 @@ var baseUrl = "http://127.0.0.1:8000";
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/error.png">
 </p>
 
-* For Baidu, you should ① shut down the instance predicton function and ② set all SERPs to be opened in a new window. Without these settings, search pages will be updated merely by in-page javascript functions and our toolkit will be failed to record correct information. 
+* For Baidu, you should 1) shut down the instance predicton function, and 2) set all SERPs to be opened in a new window. Without these settings, search pages will be updated merely by in-page javascript functions and our toolkit will be failed to record correct information. 
 
 <p align="center">
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/close.png">
