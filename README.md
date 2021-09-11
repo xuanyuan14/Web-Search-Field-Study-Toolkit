@@ -6,6 +6,7 @@ Make field study easier to conduct!
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-red.svg)](#python)
 [![made-with-js](https://img.shields.io/badge/Made%20with-JS-yellow.svg)](#javascript)
+[![code-size](https://img.shields.io/github/languages/code-size/xuanyuan14/Web-Search-Field-Study-Toolkit?color=green)]()
 
 ## Introduction
 This codebase contains source-code of the field study platform of our WWW 2021 paper:
