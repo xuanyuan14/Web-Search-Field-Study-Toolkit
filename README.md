@@ -2,7 +2,7 @@
 
 Make field study easier to conduct!
 
-[![THUIR](https://img.shields.io/badge/THUIR-ver%201.0-blueviolet)](www.thuir.cn)
+[![THUIR](https://img.shields.io/badge/THUIR-ver%201.0-blueviolet)](http://www.thuir.cn)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-red.svg)](#python)
 [![made-with-js](https://img.shields.io/badge/Made%20with-JS-yellow.svg)](#javascript)
