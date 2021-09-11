@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'franky, xuanyuan14'
 
 from django.db import models
 from user_system.models import User

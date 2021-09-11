@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'defaultstr'
 
 from django.http import HttpResponseRedirect
 

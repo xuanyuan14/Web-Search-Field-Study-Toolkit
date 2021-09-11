@@ -1,22 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'defaultstr'
 
 from django import forms
 
 search_frequency_choices = (
     ('', u''),
-    ('frequently', u'每天使用多次'),
-    ('usually', u'平均每天使用一次'),
-    ('sometimes', u'每周偶尔使用两三次'),
-    ('rarely', u'平均每周使用不超过一次'),
+    ('frequently', u'Several times a day'),
+    ('usually', u'Once per day'),
+    ('sometimes', u'Several times a week'),
+    ('rarely', u'Less than once a week'),
 )
 search_history_choices = (
     ('', u''),
-    ('very long', u'5年以上'),
-    ('long', u'3年~5年'),
-    ('short', u'1年~3年'),
-    ('very short', u'1年以内'),
+    ('very long', u'five years or longer'),
+    ('long', u'three to five years'),
+    ('short', u'one to three years'),
+    ('very short', u'less than one year'),
 )
 
 
@@ -25,7 +24,7 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'请输入用户名',
+                'placeholder': u'Please input the username',
             }
         )
     )
@@ -33,7 +32,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'密码',
+                'placeholder': u'Password',
             }
         )
     )
@@ -43,100 +42,100 @@ class SignupForm(forms.Form):
     username = forms.CharField(
         required=True,
         min_length=6,
-        label=u'用户名',
+        label=u'Username',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'请输入用户名',
+                'placeholder': u'Please input the username',
             }
         )
     )
     password = forms.CharField(
         required=True,
         min_length=6,
-        label=u'密码',
+        label=u'Password',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'密码',
+                'placeholder': u'Password',
             }
         )
     )
     password_retype = forms.CharField(
         required=True,
         min_length=6,
-        label=u'再次输入密码',
+        label=u'Please input the password again',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'再次输入密码',
+                'placeholder': u'Please input the password again',
             }
         )
     )
     name = forms.CharField(
         required=True,
-        label=u'真实姓名',
+        label=u'Name',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'真实姓名',
+                'placeholder': u'Name',
             }
         )
     )
     sex = forms.CharField(
         required=True,
-        label=u'性别',
+        label=u'Gender',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'性别',
+                'placeholder': u'gender',
             }
         )
     )
     age = forms.IntegerField(
         required=True,
-        label=u'年龄',
+        label=u'Age',
         widget=forms.NumberInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'年龄',
+                'placeholder': u'Age',
             }
         )
     )
     phone = forms.CharField(
         required=True,
-        label=u'手机',
+        label=u'Phone Number',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'手机',
+                'placeholder': u'Phone Number',
             }
         )
     )
     email = forms.EmailField(
         required=True,
-        label=u'邮箱',
+        label=u'E-mail Address',
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'邮箱',
+                'placeholder': u'E-mail Address',
             }
         )
     )
     field = forms.CharField(
         required=True,
-        label=u'职业+学习/工作领域',
+        label=u'Occupation',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'职业+学习/工作领域',
+                'placeholder': u'Occupation',
             }
         )
     )
     search_frequency = forms.ChoiceField(
         required=True,
         choices=search_frequency_choices,
-        label=u'搜索引擎使用频率',
+        label=u'How often fo you use search engines?',
         widget=forms.Select(
             attrs={
                 'class': 'select2-container form-control select select-primary',
@@ -146,7 +145,7 @@ class SignupForm(forms.Form):
     search_history = forms.ChoiceField(
         required=True,
         choices=search_history_choices,
-        label=u'搜索引擎使用历史',
+        label=u'How long have you been using search engines?',
         widget=forms.Select(
             attrs={
                 'class': 'select2-container form-control select select-primary',
@@ -161,7 +160,7 @@ class SignupForm(forms.Form):
 
         if password != password_retype:
             raise forms.ValidationError(
-                u'两次输入密码不一致'
+                u'The two passwords are inconsistent!'
             )
 
         return cleaned_data
@@ -170,68 +169,68 @@ class SignupForm(forms.Form):
 class EditInfoForm(forms.Form):
     name = forms.CharField(
         required=True,
-        label=u'真实姓名',
+        label=u'Name',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'真实姓名',
+                'placeholder': u'Name',
             }
         )
     )
     sex = forms.CharField(
         required=True,
-        label=u'性别',
+        label=u'Gender',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'性别',
+                'placeholder': u'Gender',
             }
         )
     )
     age = forms.IntegerField(
         required=True,
-        label=u'年龄',
+        label=u'Age',
         widget=forms.NumberInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'年龄',
+                'placeholder': u'Age',
             }
         )
     )
     phone = forms.CharField(
         required=True,
-        label=u'手机',
+        label=u'Phone Number',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'手机',
+                'placeholder': u'Phone Number',
             }
         )
     )
     email = forms.EmailField(
         required=True,
-        label=u'邮箱',
+        label=u'E-mail Address',
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'邮箱',
+                'placeholder': u'E-mail Address',
             }
         )
     )
     field = forms.CharField(
         required=True,
-        label=u'职业+学习/工作领域',
+        label=u'Occupation',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'职业+学习/工作领域',
+                'placeholder': u'Occupation',
             }
         )
     )
     search_frequency = forms.ChoiceField(
         required=True,
         choices=search_frequency_choices,
-        label=u'搜索引擎使用频率',
+        label=u'How often fo you use search engines?',
         widget=forms.Select(
             attrs={
                 'class': 'select2-container form-control select select-primary',
@@ -241,7 +240,7 @@ class EditInfoForm(forms.Form):
     search_history = forms.ChoiceField(
         required=True,
         choices=search_history_choices,
-        label=u'搜索引擎使用历史',
+        label=u'How long have you been using search engines?',
         widget=forms.Select(
             attrs={
                 'class': 'select2-container form-control select select-primary',
@@ -255,33 +254,33 @@ class EditPasswordForm(forms.Form):
     cur_password = forms.CharField(
         required=True,
         min_length=6,
-        label=u'当前密码',
+        label=u'Current password',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'密码',
+                'placeholder': u'password',
             }
         )
     )
     new_password = forms.CharField(
         required=True,
         min_length=6,
-        label=u'新密码',
+        label=u'New password',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'密码',
+                'placeholder': u'password',
             }
         )
     )
     new_password_retype = forms.CharField(
         required=True,
         min_length=6,
-        label=u'再次输入密码',
+        label=u'Please input the new password again',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'再次输入密码',
+                'placeholder': u'Please input the new password again',
             }
         )
     )
@@ -293,7 +292,7 @@ class EditPasswordForm(forms.Form):
 
         if password != password_retype:
             raise forms.ValidationError(
-                u'两次输入密码不一致'
+                u'The two passwords are inconsistent!'
             )
 
         return cleaned_data
@@ -302,11 +301,11 @@ class EditPasswordForm(forms.Form):
 class ForgetPasswordForm(forms.Form):
     email = forms.EmailField(
         required=True,
-        label=u'邮箱',
+        label=u'E-mail Address',
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'输入邮箱',
+                'placeholder': u'Input E-mail address',
             }
         )
     )
@@ -317,22 +316,22 @@ class ResetPasswordForm(forms.Form):
     new_password = forms.CharField(
         required=True,
         min_length=6,
-        label=u'新密码',
+        label=u'New password',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'密码',
+                'placeholder': u'password',
             }
         )
     )
     new_password_retype = forms.CharField(
         required=True,
         min_length=6,
-        label=u'再次输入密码',
+        label=u'Please input the new password again',
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control login-field',
-                'placeholder': u'再次输入密码',
+                'placeholder': u'Please input the new password again',
             }
         )
     )
@@ -344,7 +343,7 @@ class ResetPasswordForm(forms.Form):
 
         if password != password_retype:
             raise forms.ValidationError(
-                u'两次输入密码不一致'
+                u'The two passwords are inconsistent!'
             )
 
         return cleaned_data

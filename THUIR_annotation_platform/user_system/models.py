@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'defaultstr'
 
 from django.db import models
 from .forms import *
@@ -9,8 +8,8 @@ from uuid import uuid4
 import time
 
 user_group_list = (
-    ('admin', u'管理员'),
-    ('normal_user', u'普通用户'),
+    ('admin', u'Admin'),
+    ('normal_user', u'User'),
 )
 
 

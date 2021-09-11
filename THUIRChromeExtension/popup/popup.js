@@ -1,5 +1,4 @@
-var baseUrl = "http://166.111.138.86:15029";
-// var baseUrl = "http://127.0.0.1:8000";
+var baseUrl = "http://127.0.0.1:8000";
 var checkUrl = baseUrl + "/user/check/";
 var registerUrl = baseUrl + "/user/signup/";
 var feedbackUrl = baseUrl + "/task/home/";
@@ -88,7 +87,7 @@ function trylogin() {
 }
 
 function feedback() {
-    if (confirm("提示: 若正在进行搜索任务(搜索页面未关闭),请在进行标注前关闭搜索页面!\n若没有请忽略此信息"))
+    if (confirm("Tip: If the search process is on-going (the search page is not closed), please close the search page before annotating!\nIf not, ignore this message."))
         window.open(feedbackUrl);
 }
 

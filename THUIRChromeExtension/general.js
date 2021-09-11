@@ -20,7 +20,6 @@ mPage.update = function () {
             $(element).click(function (event) {
                 var click_time = (new Date()).getTime();
                 var href = $($(this).get(0)).attr("href");
-                // 站内链接
                 if (href[0] !== "h") {
                         var url = window.location.href;
                         var start_id = url.search('.com');

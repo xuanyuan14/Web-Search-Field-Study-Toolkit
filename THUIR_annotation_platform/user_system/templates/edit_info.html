@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %} 修改用户信息  {% endblock %}
+{% block title %} Edit User Info  {% endblock %}
 
 {% block content %}
     <div class="row text-center">
         <h3>
-            修改用户信息
+            Edit User Info
         </h3>
     </div>
     <div class="row">
@@ -44,12 +44,12 @@
             </div>
 
             <div class="form-group">
-                <label>使用搜索引擎的频率</label>
+                <label>How often do you use search engines?</label>
                 {{ form.search_frequency }}
             </div>
 
             <div class="form-group">
-                <label>使用搜索引擎的历史</label>
+                <label>How long have you been using search engines?</label>
                 {{ form.search_history }}
             </div>
             {% if error_message %}
@@ -58,7 +58,7 @@
             </div>
             {% endif %}
 
-            <a id="login_button" class="btn btn-primary btn-lg btn-block" href="#">提交</a>
+            <a id="login_button" class="btn btn-primary btn-lg btn-block" href="#">Submit</a>
         </form>
     </div>
     </div>

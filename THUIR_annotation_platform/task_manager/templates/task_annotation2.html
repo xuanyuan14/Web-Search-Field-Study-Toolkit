@@ -1,70 +1,70 @@
 {% extends "base.html" %}
-{% block title %} 任务标注 {% endblock %}
-{% block content_title %} 任务标注 {% endblock %}
+{% block title %} Task Annotation {% endblock %}
+{% block content_title %} Task Annotation {% endblock %}
 {% block content %}
     {% if not flag %}
     <script>
-        alert('你有之前的浏览页面的结果有用性忘了标注,请检查!');
+        alert('Several queries in the previous page have not been annotated with usefulness, please check it out!');
         window.location.href = '/task/query_annotation/{{ task.id }}';
     </script>
     {% endif %}
     <div class="row text-center">
         <h3>
-            任务标注
+            Task Annotation
         </h3>
     </div>
     <div class="row">
         <div class="col-xs-offset-1 col-xs-10">
             <div class="col-xs-12 list_header">
-                该任务下查询词
+                Queries within the task
             </div>
             {% for query, pages in queries_to_pages %}
                 <div class="col-xs-12 list_row">
                     <label>{{ query.query_string }}</label>
                     <ul>
                         {% for page in pages %}
-                            <li>第{{ page.page_id }}页<a href="/task/show_page/{{ page.id }}" target="_blank">(点击查看)</a></li>
+                            <li>Page {{ page.page_id }}<a href="/task/show_page/{{ page.id }}" target="_blank">(Click here to view)</a></li>
                         {% endfor %}
                     </ul>
                 </div>
             {% endfor %}
             <div class="col-xs-12"><br /></div>
             <div class="col-xs-12 list_header">
-                任务标注
+                Task Annotation
             </div>
             <form class="col-xs-12" id="task-form" action="" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
-                <label for="satisfaction_ratio" class="ratio col-xs-12 list_row">1. <b>任务满意度</b>：回顾此次搜索任务，你认为你对于完成该任务的整个搜索过程是否满意？0为非常不满意，4为非常满意</label>
+                <label for="satisfaction_ratio" class="ratio col-xs-12 list_row">1. <b>Task Satisfaction</b> Were you satisfied with the search process during this task? (0) unsatisfied - (4) very satisfied</label>
                 <div class="ratio col-xs-12 list_row">
-                    <label><input type="radio" name="satisfaction_ratio"  value="0" /> 0分 </label>
-                    <label><input type="radio" name="satisfaction_ratio"  value="1" /> 1分 </label>
-                    <label><input type="radio" name="satisfaction_ratio"  value="2" /> 2分 </label>
-                    <label><input type="radio" name="satisfaction_ratio"  value="3" /> 3分 </label>
-                    <label><input type="radio" name="satisfaction_ratio"  value="4" /> 4分 </label>
+                    <label><input type="radio" name="satisfaction_ratio"  value="0" /> 0 </label>
+                    <label><input type="radio" name="satisfaction_ratio"  value="1" /> 1 </label>
+                    <label><input type="radio" name="satisfaction_ratio"  value="2" /> 2 </label>
+                    <label><input type="radio" name="satisfaction_ratio"  value="3" /> 3 </label>
+                    <label><input type="radio" name="satisfaction_ratio"  value="4" /> 4 </label>
                 </div>
                 <script>
                     $("input:radio[name='satisfaction_ratio'][value='{{ task.satisfaction }}']").attr('checked','true');
                 </script>
                 <div class="col-xs-12"></div>
-                <label for="information_difficulty" class="ratio col-xs-12 list_row">2. <b>任务困难度</b>：回顾此次搜索任务，你觉得找到完成该任务所需要的信息是否困难？0为非常简单，4为非常困难</label>
+                <label for="information_difficulty" class="ratio col-xs-12 list_row">2. <b>Task Difficulty</b> How do you feel about the difficulty of finding useful information? (0) very easy - (4) very difficult</label>
                 <div class="ratio col-xs-12 list_row">
-                    <label><input type="radio" name="information_difficulty"  value="0" /> 0分 </label>
-                    <label><input type="radio" name="information_difficulty"  value="1" /> 1分 </label>
-                    <label><input type="radio" name="information_difficulty"  value="2" /> 2分 </label>
-                    <label><input type="radio" name="information_difficulty"  value="3" /> 3分 </label>
-                    <label><input type="radio" name="information_difficulty"  value="4" /> 4分 </label>
+                    <label><input type="radio" name="information_difficulty"  value="0" /> 0 </label>
+                    <label><input type="radio" name="information_difficulty"  value="1" /> 1 </label>
+                    <label><input type="radio" name="information_difficulty"  value="2" /> 2 </label>
+                    <label><input type="radio" name="information_difficulty"  value="3" /> 3 </label>
+                    <label><input type="radio" name="information_difficulty"  value="4" /> 4 </label>
                 </div>
                 <script>
                     $("input:radio[name='information_difficulty'][value='{{ task_annotation.information_difficulty }}']").attr('checked','true');
                 </script>
                 <div class="col-xs-12"></div>
-                <label for="success" class="ratio col-xs-12 list_row">3. <b>任务成功度</b>：回顾此次搜索任务，你认为你在收集信息去完成该任务方面是否成功？0为非常失败，4为非常成功</label>
+                <label for="success" class="ratio col-xs-12 list_row">3. <b>Task Success</b> Did you find any useful information for this task? (0) almost no - (4) all you want</label>
                 <div class="ratio col-xs-12 list_row">
-                    <label><input type="radio" name="success"  value="0" /> 0分 </label>
-                    <label><input type="radio" name="success"  value="1" /> 1分 </label>
-                    <label><input type="radio" name="success"  value="2" /> 2分 </label>
-                    <label><input type="radio" name="success"  value="3" /> 3分 </label>
-                    <label><input type="radio" name="success"  value="4" /> 4分 </label>
+                    <label><input type="radio" name="success"  value="0" /> 0 </label>
+                    <label><input type="radio" name="success"  value="1" /> 1 </label>
+                    <label><input type="radio" name="success"  value="2" /> 2 </label>
+                    <label><input type="radio" name="success"  value="3" /> 3 </label>
+                    <label><input type="radio" name="success"  value="4" /> 4 </label>
                 </div>
                 <script>
                     $("input:radio[name='success'][value='{{ task_annotation.success }}']").attr('checked','true');
@@ -73,7 +73,7 @@
             </form>
             <div class="col-xs-12">
                 <div id="task-btn" class="col-xs-6 submit-btn btn btn-block btn-lg btn-primary">
-                    提交标注
+                    Submit
                 </div>
             </div>
         </div>
@@ -85,21 +85,21 @@
                     var information_difficulty = $("[name='information_difficulty']:checked");
                     var success = $("[name='success']:checked");
                     if (satisfaction.val() == null) {
-                        alert('请选择一个满意度!');
+                        alert('Please choose a satisfaction value!');
                         $("[name='satisfaction_ratio']").focus();
                         return
                     }
                     if (information_difficulty.val() == null) {
-                        alert('请选择一个信息困难程度!');
+                        alert('Please choose a difficulty value!');
                         $("[name='information_difficulty']").focus();
                         return
                     }
                     if (success.val() == null) {
-                        alert('请选择一个搜索体验程度!');
+                        alert('Please choose a search success value!');
                         $("[name='success']").focus();
                         return
                     }
-                    if (confirm("确认提交任务标注?"))
+                    if (confirm("Are you sure to submit all annotations?"))
                         $('#task-form').submit();
                 }
             );

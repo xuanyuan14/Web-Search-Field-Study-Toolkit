@@ -9,8 +9,13 @@ Make field study easier to conduct!
 [![code-size](https://img.shields.io/github/languages/code-size/xuanyuan14/Web-Search-Field-Study-Toolkit?color=green)]()
 
 ## Introduction
-This codebase contains source-code of the field study platform of our WWW 2021 paper.
+This codebase contains source-code of the field study platform of our WWW 2021 paper:
   - [Chen, Jia, et al. "Towards a Better Understanding of Query Reformulation Behavior in Web Search." Proceedings of the Web Conference 2021. 2021.](https://dl.acm.org/doi/abs/10.1145/3442381.3450127)
+
+## Overview
+<p align="center">
+  <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/overview.png">
+</p>  
 
 ## List of Recorded Information
 * Pre-query expectation: such as ```diversity```, ```result type```, ```redundancy```, ```difficulty```, ```number of relevant results```, ```effort```.
@@ -46,7 +51,7 @@ python manage.py runserver 0.0.0.0:8000
 
 * Now, all things get ready! Just start your field study!
 
-## Something you should notice
+## Some things you should notice
 * The baseURL in the extension should be the same with the base URL of the annotation platform.
 ```javascript
 var baseUrl = "http://127.0.0.1:8000";

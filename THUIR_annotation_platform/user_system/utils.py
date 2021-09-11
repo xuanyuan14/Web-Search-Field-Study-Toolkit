@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = 'defaultstr'
 
 from .models import User, ResetPasswordRequest, user_group_list
 from django.http import HttpResponseRedirect
@@ -107,13 +106,13 @@ def get_user_groups_string(user_groups):
 
 
 def send_reset_password_email(request, reset_req):
-    subject = u'THUIR标注平台找回密码'
+    subject = u'THUIR Annotation Platform Forget Password'
 
     user = reset_req.user
 
-    message = u'如果您是 %s 用户, ' % user.username
+    message = u'If you are user %s' % user.username + ','
 
-    message += u'请点击或复制以下连接到浏览器地址栏以重置密码:'
+    message += u'Please click or copy the link below to your browser address bar to reset your password:'
     host = u'http://' + request.get_host()
     url = unicode(host + '/user/reset_password/%s/' % reset_req.token)
     html_content = message + u'<a href="%s">%s</a>.' % (url, url)

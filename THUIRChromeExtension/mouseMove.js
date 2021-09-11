@@ -1,9 +1,3 @@
-/**
- * 一个类来记录一个移动
- * @param {Point} from 起始点
- * @param {Point} to 终止点
- * @param {String} moveType 移动类型，分为Move和Scroll
- */
 var aMove=function(from,to,moveType){
         this.Sx=from.x;
         this.Sy=from.y;
@@ -14,29 +8,14 @@ var aMove=function(from,to,moveType){
         this.Ty=moveType;
 }
 
-/**
- * 构造一个时间点，表示这个时候所在坐标
- * X和Y的位置为相对应内容最左上角的位置，也就是加入了窗口滑动的距离
- * @param {number} x 坐标X
- * @param {number} y 坐标Y
- * @param {number} time 当前时间
- */
 var Point=function(x,y,time){
     this.x=x;
     this.y=y;
     this.time=time;
-    /**
-     * 返回自己与另一个点的欧式距离
-     * @param {Point} bPoint 另一个点 
-     */
     this.getDis = function(bPoint){
         return Math.sqrt((this.x-bPoint.x)*(this.x-bPoint.x) + (this.y-bPoint.y)*(this.y-bPoint.y)) *(bPoint.y-this.y<0? -1:1);
     }
 
-    /**
-     * 以自己为起点另一点为终点做匀速直线运动的速度
-     * @param {Point} bPoint 终点
-     */
     this.getSpd = function(bPoint){
         if(debug) console.log("Speed = "+(this.getDis(bPoint)/(bPoint.time-this.time)));
         return this.getDis(bPoint)/(bPoint.time-this.time);
@@ -47,43 +26,17 @@ var Point=function(x,y,time){
     }
 }
 
-/**
- * 一条压缩的路径
- * @param {Point} startPoint 第一次操作开始点(X,Y,T)
- * @param {string} name 这条路径的名称
- */
 var Path=function(startPoint,name){
-    /**
-     * 这条路径的名字
-     */
     this.name=name;
-    /**
-     * 目前所有储存的操作集合
-     */
     this.moves=new Array();
-    /**
-     * 滑动窗口内的点
-     * pt0 and pt1
-     */
     this.window=new Array();
-    /**
-     * 最近一次操作相对页面可见的左上角绝对位置
-     * and 最近一次操作时间
-     */
     this.lastPoint=null;
 
-    /**
-     * 距离偏移参考点
-     */
     this.keyPoint=null;
 
     this.errDis = 5;
     this.errSpd = 0.5;
 
-    /**
-     * 加入一个点
-     * @param {Point} nPoint 一个新的点
-     */
     this.add = function(nPoint){
         if(this.lastPoint!=null && Math.abs(nPoint.time - this.lastPoint.time) <= 40) return;
         this.lastPoint = nPoint;
@@ -107,10 +60,6 @@ var Path=function(startPoint,name){
         }
     }
 
-    /**
-     * 清空当前滑动窗口内的内容并且保存到moves内
-     * @param {number} time 最后结束的时间，如果不传代表直接清空
-     */
     this.flush = function(time = -1){
         if(time != -1) this.add(new Point(this.lastPoint.x,this.lastPoint.y,time));//bug fixed
         if(this.window.length == 2){
@@ -120,52 +69,26 @@ var Path=function(startPoint,name){
         this.window=new Array();
     }
 
-    /**
-     * 获得这个路径，以Array的形式返回aMove数组
-     */
     this.getData=function(){
         return this.moves;
     }
 
-    /**
-     * 初始化的构造函数
-     */
     this.add(startPoint);
 }
 
-/**
- * 用于记录鼠标移动的对象
- */
 var mRec={
 
-    /**
-     * 鼠标移动路径
-     */
     movePath:null,
-
-    /**
-     * 鼠标滚动路径
-     */
     scrollPath:null,
-
-    /**
-     * 暂停记录鼠标移动
-     */
     pause:function(){
         if(mRec.movePath != null) mRec.movePath.flush((new Date()).getTime());
         if(mRec.scrollPath != null) mRec.scrollPath.flush((new Date()).getTime());
     },
 
-    /**
-     * 结束记录鼠标移动
-     */
     end:function(){
         mRec.pause();
     },
 
-    /**
-     * 导出记录的鼠标数据
-     */
     getData:function(){
         var ret = new Array();
         if(mRec.movePath != null) ret=ret.concat(mRec.movePath.getData());
@@ -173,10 +96,6 @@ var mRec={
         return ret;
     },
 
-    /**
-     * 鼠标移动了
-     * @param {鼠标位置信息} e
-     */
     move:function (e){
         var oPoint= new Point(e.pageX,e.pageY,(new Date()).getTime());
         if(mRec.movePath == null)
@@ -185,9 +104,6 @@ var mRec={
             mRec.movePath.add(oPoint);
     },
 
-    /**
-     * 滚了
-     */
     scroll:function(){
         var oPoint= new Point($(window).scrollLeft(),$(window).scrollTop(),(new Date()).getTime());
         if(mRec.scrollPath == null)
@@ -200,18 +116,13 @@ var mRec={
         mRec.scrollPath = null;
         if (debug) console.log("mRec initialize");
     },
-    //---以下为重新播放刚刚的操作的部分
+
     controlMouse:function(x,y){
         $("#box").attr("style","left:"+x+"px;top:"+y+"px;position:absolute;width:20px;height:20px;background:red;z-index:999999;");
     },
     controlScroll:function(x,y){
         window.scrollTo(x,y);
     },
-    /**
-     * @param {aMove} move
-     * @param {number} t0
-     * @param {function} controller
-     */
     reRun:function(move,t0,controller){
         var tnow=(new Date()).getTime()-t0;
         var dx=(move.Ex-move.Sx)/(move.Et-move.St)*tnow;
@@ -222,9 +133,6 @@ var mRec={
         var key =setInterval(mRec.reRun,10,move,(new Date()).getTime(),controler);
         setTimeout(function(key){window.clearInterval(key)},move.Et-move.St,key);
     },
-    /**
-     * 重放刚刚录制的操作
-     */
     replay:function(){
         $("body").append('<div id="box" style="left: 43px; top: 47px;position:absolute;width:10px;height:10px;background:red;z-index:999999;"></div>')
         mRec.pause();

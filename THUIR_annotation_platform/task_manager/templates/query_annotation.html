@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %} 分查询词标注 {% endblock %}
-{% block content_title %} 分查询词标注 {% endblock %}
+{% block title %} Per Query Annotation {% endblock %}
+{% block content_title %} Per Query Annotation {% endblock %}
 {% block content %}
     <div class="row text-center">
         <h3>
-            请对每个查询词逐一完成以下标注
+            Please annotate each query for following questions:
         </h3>
     </div>
     <div class="row">
@@ -14,117 +14,117 @@
                 {% for query, prequery, query_annotation, pages_and_status in items_list %}
                     <div class="col-xs-12" style="border:1px dashed #000; border-radius:10px">
                         <div class="col-xs-12 list_header list_row">
-                            查询词: {{ query.query_string }}
+                            Query Text: {{ query.query_string }}
                             <ul>
                                 {% for page, status in pages_and_status %}
-                                    <li>第{{ page.page_id }}页<a href="/task/show_page/{{ page.id }}"
-                                                               target="_blank">(点击查看)</a></li>
+                                    <li>Page {{ page.page_id }}<a href="/task/show_page/{{ page.id }}"
+                                                               target="_blank">(Click here to )</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
-                        <label for="relation_ratio" class="ratio col-xs-12 list_row"><b>1. 本查询词 B <span
-                                style="color: #c00">("{{ query.query_string }}")</span>与前一个查询词 A <span
-                                style="color: #c00">("{{ prequery.query_string }}")</span>的关系是</b></label>
+                        <label for="relation_ratio" class="ratio col-xs-12 list_row"><b>1. The relationship between the current query B <span
+                                style="color: #c00">("{{ query.query_string }}")</span>and the last query A <span
+                                style="color: #c00">("{{ prequery.query_string }}")</span>is</b></label>
 
                         <div class="ratio col-xs-12 list_row">
-                            <label><input type="radio" name="relation_ratio_{{ query.id }}" value="1"/> 初始查询</label>
+                            <label><input type="radio" name="relation_ratio_{{ query.id }}" value="1"/> This is the first query. </label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="2"/>
-                                增加查询要求，更加具体：B属于A的一种（例：A：“<b>华为手机</b>” vs B：“<b>华为p40</b>”）</label>
+                                Add requirement, i.e., more specific, B is a particular case of A, e.g., A: <b>HUAWEI Phone</b> vs B: <b>HUAWEI p40</b></label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="3"/>
-                                减少查询要求，更加宽泛：A属于B的一种（例：A：“<b>华为p40</b>” vs B：“<b>华为手机</b>”）</label>
+                                Delete requirement, i.e., more generalize, A is a particular case of B, e.g., A: <b>HUAWEI p40</b> vs B: <b>HUAWEI Phone</b></label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="4"/>
-                                A和B具有从属关系，B是A的属性或部分（即A为整体、B为部分，例：A：“<b>华为p40</b>” vs B：“<b>华为p40参数</b>”；A：“<b>华为p40</b>” vs B：“<b>华为p40屏幕</b>”）</label>
+                                B is an attribute or a component of A, e.g., A: <b>HUAWEI p40</b> vs B: <b>HUAWEI p40 spec</b>；A: <b>HUAWEI p40</b> vs B: <b>HUAWEI p40 screen</b></label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="5"/>
-                                A和B具有从属关系，A是B的属性或部分（即B为整体、A为部分，例：A：“<b>华为p40参数</b>” vs B：“<b>华为p40</b>”；A：“<b>华为p40屏幕</b>” vs B：“<b>华为p40</b>”）</label>
+                                A is an attribute or a component of B, e.g., A: <b>HUAWEI p40 spec</b> vs B: <b>HUAWEI p40</b>；A: <b>HUAWEI p40 screen</b> vs B: <b>HUAWEI p40</b></label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="6"/>
-                                同一个查询目标，重新组词/同义词/错别字更正（例：A：“<b>海淀房价</b>” vs B：“<b>海淀区 房价</b>”；A：“<b>北京大学</b>” vs B：“<b>北大</b>”）</label>
+                                The same search target, rephrase/synonym/spelling correction, e.g., A: <b>Haidian housing price</b> vs B: <b>Haidian District housing price</b>；A: <b>Massachusetts Institute of Technology</b> vs B: <b>MIT</b> </label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="7"/>
-                                B和A没有包含关系以及从属关系，但是二者有关联（例：A：“<b>华为p40</b>” vs B：“<b>小米10</b>”；想搜手机品牌, 二者都属于这个主题）</label>
+                                There is no hypotaxis between A and B, but there is relationship, e.g, A: <b>HUAWEI p40</b> vs B: <b>Xiaomi 10</b>, if you want to search for mobile phone brands.</label>
                             <br/>
                             <label><input type="radio" name="relation_ratio_{{ query.id }}" value="8"/>
-                                B和A是属于完全不同的主题，即二者无交集（例：A：“<b>三文鱼</b>” vs B：“<b>高达</b>”）</label>
+                                A and B is completely irrelevant, e.g., A: <b>salmon</b> vs B: <b>robot</b></label>
                             <br/>
-                            <label><input type="radio" name="relation_ratio_{{ query.id }}" value="0"/> 其他 <input
+                            <label><input type="radio" name="relation_ratio_{{ query.id }}" value="0"/> Others <input
                                     type="text" name="relation_text_{{ query.id }}"
-                                    value="{{ query_annotation.other_relation }}" placeholder="请在此处输入其他重构关系"
+                                    value="{{ query_annotation.other_relation }}" placeholder="Please input other reformulation type here."
                                     size="50"/></label>
                         </div>
                         <script>
                             $("input:radio[name='relation_ratio_{{ query.id }}'][value='{{ query_annotation.relation }}']").attr('checked', 'true');
                         </script>
-                        <label for="inspiration" class="ratio col-xs-12 list_row"><b>2. 您从哪里得到的灵感而构造的本次查询？</b></label>
+                        <label for="inspiration" class="ratio col-xs-12 list_row"><b>2. Where is the reformulation inspiration from?</b></label>
 
                         <div class="ratio col-xs-12 list_row">
-                            <label><input type="radio" name="inspiration_{{ query.id }}" value="1"/> 初始查询</label>
+                            <label><input type="radio" name="inspiration_{{ query.id }}" value="1"/>This is the initial query.</label>
                             <br/>
                             <label><input type="radio" name="inspiration_{{ query.id }}" value="2"/>
-                                从搜索引擎结果页面的搜索结果摘要（包括结果摘要和标题）</label>
+                                From the search snippet (including snippet and title).</label>
                             <br/>
                             <label><input type="radio" name="inspiration_{{ query.id }}" value="3"/>
-                                从搜索引擎结果页面的其他部分（例如相关搜索、广告、热搜榜等等）</label>
+                                From other components in SERP, such as related search, ads, hot queries.</label>
                             <br/>
                             <label><input type="radio" name="inspiration_{{ query.id }}" value="4"/>
-                                从某（几）个结果打开的网页</label>
+                                From one or several landing pages.</label>
                             <br/>
                             <label><input type="radio" name="inspiration_{{ query.id }}" value="5"/>
-                                其他（没有从搜索结果中获得，例如：①脑海中灵光一闪想到了这个查询词；②我在搜索之前就想好了查这个）</label>
+                                Others (Not from the search process, e.g., a cognitive snap or having thought about it before the search process).</label>
                             <br/>
                         </div>
                         <script>
                             $("input:radio[name='inspiration_{{ query.id }}'][value='{{ query_annotation.inspiration }}']").attr('checked', 'true');
                         </script>
                         <label for="satisfaction_ratio"
-                               class="ratio col-xs-12 list_row"><b>3. 回顾此次搜索查询，您认为对于完成该查询的整个搜索过程是否满意？0为很不满意，4为非常满意</b></label>
+                               class="ratio col-xs-12 list_row"><b>3. Were you satisfied with the search results in this query？(0) unsatisfied - (4) very satisfied</b></label>
 
                         <div class="ratio col-xs-12 list_row">
-                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="0"/> 0分 </label>
-                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="1"/> 1分 </label>
-                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="2"/> 2分 </label>
-                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="3"/> 3分 </label>
-                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="4"/> 4分 </label>
+                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="0"/> 0 </label>
+                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="1"/> 1 </label>
+                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="2"/> 2 </label>
+                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="3"/> 3 </label>
+                            <label><input type="radio" name="satisfaction_ratio_{{ query.id }}" value="4"/> 4 </label>
                         </div>
                         <script>
                             $("input:radio[name='satisfaction_ratio_{{ query.id }}'][value='{{ query_annotation.satisfaction }}']").attr('checked', 'true');
                         </script>
-                        <label for="ending_ratio" class="ratio col-xs-12 list_row"><b>4. 你停止在本查询词下继续浏览的原因是？</b></label>
+                        <label for="ending_ratio" class="ratio col-xs-12 list_row"><b>4. Why did you reformulate this query or end your search? </b></label>
 
                         <div class="ratio col-xs-12 list_row">
                             <label><input type="radio" name="ending_ratio_{{ query.id }}" value="4"/>
-                                我已经得到了我预期得到的信息，所以结束本查询</label>
+                                I have found enough information.</label>
                             <br/>
                             <label><input type="radio" name="ending_ratio_{{ query.id }}" value="3"/>
-                                本页面无法满足我的信息需求，我<b>被迫</b>只能更换查询词或直接结束查询</label>
+                                I found no useful information with great effort and were forced to reformulate the query.</label>
                             <br/>
                             <label><input type="radio" name="ending_ratio_{{ query.id }}" value="2"/>
-                                我中途<b>主动</b>想到了一个更好的查询词（<b>没有意图转移</b>），无所谓当前查询信息需求满足了多少</label>
+                                I come up with a better query for current information need without intent shift.</label>
                             <br/>
-                            <label><input type="radio" name="ending_ratio_{{ query.id }}" value="1"/> 我突然想到了更感兴趣的查询词（<b>有一定的意图转移</b>），无所谓当前查询信息需求满足了多少</label>
+                            <label><input type="radio" name="ending_ratio_{{ query.id }}" value="1"/> I come up with a more interesting query with intent shift;</label>
                             <br/>
-                            <label><input type="radio" name="ending_ratio_{{ query.id }}" value="0"/> 其他 <input
+                            <label><input type="radio" name="ending_ratio_{{ query.id }}" value="0"/> Others <input
                                     type="text" name="ending_text_{{ query.id }}"
-                                    value="{{ query_annotation.other_reason }}" placeholder="请在此处输入其他原因"
+                                    value="{{ query_annotation.other_reason }}" placeholder="Please input other reasons here."
                                     size="50"/></label>
                         </div>
                         <script>
                             $("input:radio[name='ending_ratio_{{ query.id }}'][value='{{ query_annotation.ending_type }}']").attr('checked', 'true');
                         </script>
                         <label for="result_annotation" class="result col-xs-12 list_row"><b>5.
-                            请分别点击下面的链接对该查询词下你所浏览的每一页结果的有用性进行标注<br />
-                            (提示: 点开链接之后,页面左边是搜索结果,请将你认为在搜索过程中对你有帮助的结果按照其有用性拖动至右边的相应位置;对于你没有看过的结果或者你认为对你完全没有帮助的结果,可以不用拖动. 为了帮助你更好地回忆搜索过程,我们将你点击过的结果在该结果的下方标注了出来,但这并不意味着你必须拖动它)</b></label>
+                            Please click on the links below to annotate the usefulness of each result page you browse under this query.<br />
+                            (Tip: After clicking the link, search results are shown in the left side of the page. Please drag the results you think are helpful in the search process to the corresponding position on the right side according to their usefulness; For results that you haven't seen or that you don't think will help you at all, you don't need to drag. To help you recall your search, we've highlighted the results you clicked on below the results, but that doesn't mean you have to drag them)</b></label>
 
                         <div class="col-xs-12 list_row">
-                            查询词: {{ query.query_string }}
+                            Query: {{ query.query_string }}
                             <ul>
                                 {% for page, status in pages_and_status %}
-                                    <li>第{{ page.page_id }}页<a class="check_link"
+                                    <li>Page {{ page.page_id }}<a class="check_link"
                                                                href="/task/page_annotation/{{ page.id }}"
-                                                               target="_blank">(点击标注)</a>
+                                                               target="_blank">(Click here to annotate)</a>
                                         {% if status %}
                                             <img class="check_img" src="/static/img/check.jpg"
                                                  style="visibility: visible; width: 20px; height: 20px">
@@ -149,10 +149,10 @@
                         </div>
                         {% if query.diversity != -1 %}
                         <label for="expectation_confirm_ratio"
-                               class="ratio col-xs-12 list_row"><b>6. 请您对本查询词搜索结果的期待值进行确认，即结束查询之后，您感知的期望各方面的真实值</b></label>
+                               class="ratio col-xs-12 list_row"><b>6. Please confirm the expectation for the current query after the search process.</b></label>
 
-                        <div class="ratio col-xs-12 list_row"> 6.1 <b>多样性确认</b>：你搜索后发现本次查询返回的结果实际上能够包括几个方面的主题？（提示：你之前给出的预期为{{ query.diversity}}）<br>
-                            <span style="display:flex;">1个主题 <input type="range" style="width: 20%" name="diversity_confirm_{{ query.id }}" min="1" max="5" value="1" step="1" list="diversity_marks" oninput="setDiversity({{ query.id }})" onchange="setDiversity({{ query.id }})"/> 5个及以上（您当前选择的数值是<b><span id="diversity_value_{{ query.id }}" >1</span></b>）</span><br>
+                        <div class="ratio col-xs-12 list_row"> 6.1 <b>Diveristy</b>: How many topics do you expect the results of this query to include? (Tip: Pre-search expectation is {{ query.diversity}})<br>
+                            <span style="display:flex;">One topic <input type="range" style="width: 20%" name="diversity_confirm_{{ query.id }}" min="1" max="5" value="1" step="1" list="diversity_marks" oninput="setDiversity({{ query.id }})" onchange="setDiversity({{ query.id }})"/> Five or more (Current choice <b><span id="diversity_value_{{ query.id }}" >1</span></b>)</span><br>
                             <datalist id="diversity_marks">
                                 <option>1</option>
                                 <option>2</option>
@@ -164,15 +164,15 @@
                         <script>
                             document.getElementsByName("diversity_confirm_{{ query.id }}")[0].value = {{ query.diversity_confirm }};
                         </script>
-                        <div class="ratio col-xs-12 list_row"> 6.2 <b>结果类型确认</b>：你搜索后发现本次查询返回的结果实际能够包含下面哪些对你有帮助的特定的结果类型？（可多选，提示：你之前给出的预期包括<b>{{ query.habit }}</b>）<br>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="1" /> 1. 百科类 </label>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="2" /> 2. 图片类 </label>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="3" /> 3. 视频类 </label>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="4" /> 4. 经验类 </label><br>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="5" /> 5. 地图类 </label>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="6" /> 6. 聚合类 </label>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="7" /> 7. 卡片类 </label>
-                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="0" /> 0. 其他类 </label><br>
+                        <div class="ratio col-xs-12 list_row"> 6.2 <b>Result Type</b>：Which of the following result types do you expect to be returned by this query? (Multiple options，Tip: Pre-search expectation is <b>{{ query.habit }}</b>)<br>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="1" /> 1. Wikipedia type </label>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="2" /> 2. Image type </label>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="3" /> 3. Video type</label>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="4" /> 4. Experience type </label><br>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="5" /> 5. Map type </label>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="6" /> 6. Aggregated type </label>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="7" /> 7. Card type </label>
+                            <label><input type="checkbox" name="habit_confirm_{{ query.id }}" value="0" /> 0. Others </label><br>
                         </div>
                         <input id="habit_str_{{ query.id }}" type="hidden" name="habit_str_{{ query.id }}">
                         <script>
@@ -183,28 +183,28 @@
 {#                                $("input:checkbox[name='habit_confirm_{{ query.id }}'][value=" + init_habits[i] + "]").attr('checked', 'true');#}
                             }
                         </script>
-                        <div class="ratio col-xs-12 list_row"> 6.3 <b>重复度确认</b>：你搜索后发现本次查询返回结果实际的重复度如何（提示：你之前给出的预期为{{ query.redundancy}}）<br>
-                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="0"/> 0：你发现全都是相似结果 </label> <br>
-                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="1"/> 1：你发现有少数结果和其他结果不一样 </label> <br>
-                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="2"/> 2：你发现有一半结果和其他结果不一样 </label> <br>
-                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="3"/> 3：你发现有大部分结果都和其他结果不一样 </label> <br>
-                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="4"/> 4：你发现所有结果都不是重复的 </label> <br>
+                        <div class="ratio col-xs-12 list_row"> 6.3 <b>Redundancy</b>: How do you expect the redundancy of the results? (Tip: Pre-search expectation is {{ query.redundancy}})<br>
+                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="0"/> 0：All similar </label> <br>
+                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="1"/> 1：Minority of the results are different </label> <br>
+                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="2"/> 2：Half of the results is different </label> <br>
+                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="3"/> 3：Majority of the results are different </label> <br>
+                            <label><input type="radio" name="redundancy_confirm_{{ query.id }}" value="4"/> 4：All results are different </label> <br>
                         </div>
                         <script>
                             $("input:radio[name='redundancy_confirm_{{ query.id }}'][value='{{ query.redundancy_confirm }}']").attr('checked', 'true');
                         </script>
-                        <div class="ratio col-xs-12 list_row"> 6.4 <b>困难度确认</b>：你搜索后发现本次查询找到你需要的信息实际有多困难?（提示：你之前给出的预期为{{ query.difficulty}}）<br>
-                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="0"/> 0：你需要的信息非常容易找到，直接就展示给你了 </label> <br>
-                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="1"/> 1：你需要的信息相对比较简单，在某些结果稍微找一下就能够发现 </label> <br>
-                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="2"/> 2：你需要的信息有一点点困难，可能需要多看一些结果，搜寻一下</label> <br>
-                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="3"/> 3：你需要的信息可能比较困难，可能大部分结果都找不到，需要你比较仔细地进行查看 </label> <br>
-                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="4"/> 4：你需要的信息会非常困难，甚至可能完全找不到 </label> <br>
+                        <div class="ratio col-xs-12 list_row"> 6.4 <b>Difficulty</b>: How do you expect the difficulty of the search process? (Tip: Pre-search expectation is {{ query.difficulty}}）<br>
+                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="0"/> 0：Very easy </label> <br>
+                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="1"/> 1：Easy </label> <br>
+                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="2"/> 2：A little bit difficult</label> <br>
+                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="3"/> 3：Difficult </label> <br>
+                            <label><input type="radio" name="difficulty_confirm_{{ query.id }}" value="4"/> 4：Very difficult </label> <br>
                         </div>
                         <script>
                             $("input:radio[name='difficulty_confirm_{{ query.id }}'][value='{{ query.difficulty_confirm }}']").attr('checked', 'true');
                         </script>
-                        <div class="ratio col-xs-12 list_row"> 6.5 <b>结果数量确认</b>：你搜索后发现本次查询你实际查看了多少个相关的结果？（提示：你之前给出的预期为{{ query.gain}}）<br>
-                            <span style="display:flex;">1个相关结果 <input type="range" style="width: 40%" name="gain_confirm_{{ query.id }}" min="1" max="10" value="1" step="1" list="gain_marks" oninput="setGain({{ query.id }})" onchange="setGain({{ query.id }})"/> 10个及以上（您当前选择的数值是<b><span id="gain_value_{{ query.id }}" >1</span></b>）</span><br>
+                        <div class="ratio col-xs-12 list_row"> 6.5 <b>Number of relevant results</b>: How many relevant results do you expect to find in this query? (Tip: Pre-search expectation is {{ query.gain}}) <br>
+                            <span style="display:flex;">One relevant result <input type="range" style="width: 40%" name="gain_confirm_{{ query.id }}" min="1" max="10" value="1" step="1" list="gain_marks" oninput="setGain({{ query.id }})" onchange="setGain({{ query.id }})"/> Ten or more (Current choice <b><span id="gain_value_{{ query.id }}" >1</span></b>)</span><br>
                             <datalist id="gain_marks">
                                 <option>1</option>
                                 <option>2</option>
@@ -221,8 +221,8 @@
                         <script>
                             document.getElementsByName("gain_confirm_{{ query.id }}")[0].value = {{ query.gain_confirm }};
                         </script>
-                        <div class="ratio col-xs-12 list_row"> 6.6 <b>投入精力确认</b>：你搜索后发现本次查询你实际投入了多少时间精力在寻找相关的信息上？（提示：你之前给出的预期为{{ query.effort}}）：<br>
-                            <span style="display:flex;">1分钟左右 <input type="range" style="width: 40%" name="effort_confirm_{{ query.id }}" min="1" max="10" value="1" step="1" list="effort_marks" oninput="setEffort({{ query.id }})" onchange="setEffort({{ query.id }})"/> 10分钟及更长时间（您当前选择的数值是<b><span id="effort_value_{{ query.id }}" >1</span></b>）</span><br>
+                        <div class="ratio col-xs-12 list_row"> 6.6 <b>Effort</b>: How much time do you expect to spend searching for relevant information in this query? (Tip: Pre-search expectation is {{ query.effort}}）：<br>
+                            <span style="display:flex;">One minute <input type="range" style="width: 40%" name="effort_confirm_{{ query.id }}" min="1" max="10" value="1" step="1" list="effort_marks" oninput="setEffort({{ query.id }})" onchange="setEffort({{ query.id }})"/> Ten minute or longer (Current choice <b><span id="effort_value_{{ query.id }}" >1</span></b>)</span><br>
                             <datalist id="effort_marks">
                                 <option>1</option>
                                 <option>2</option>
@@ -246,7 +246,7 @@
             </form>
             <div class="col-xs-12">
                 <div id="query-btn" class="col-xs-6 submit-btn btn btn-block btn-lg btn-primary">
-                    提交标注
+                    Submit
                 </div>
             </div>
         </div>
@@ -283,22 +283,22 @@
                                 var satisfaction = $("[name='satisfaction_ratio_{{ query.id }}']:checked");
                                 var ending = $("[name='ending_ratio_{{ query.id }}']:checked");
                                 if (relation.val() == null) {
-                                    alert('请选择一个关系!');
+                                    alert('Please choose a reformulation type!');
                                     $("[name='relation_ratio_{{ query.id }}']").focus();
                                     return
                                 }
                                 if (inspiration.val() == null) {
-                                    alert('请选择一个重构灵感来源!');
+                                    alert('Please choose an inspiration source!');
                                     $("[name='inspiration_{{ query.id }}']").focus();
                                     return
                                 }
                                 if (satisfaction.val() == null) {
-                                    alert('请选择一个满意度!');
+                                    alert('Please choose a satisfaction score!');
                                     $("[name='satisfaction_ratio_{{ query.id }}']").focus();
                                     return
                                 }
                                 if (ending.val() == null) {
-                                    alert('请选择一个停止浏览的原因!');
+                                    alert('Please choose a reason for ending the search!');
                                     $("[name='ending_ratio_{{ query.id }}']").focus();
                                     return
                                 }
@@ -308,23 +308,23 @@
                                     var redundancy_confirm = $("[name='redundancy_confirm_{{ query.id }}']:checked");
                                     var difficulty_confirm = $("[name='difficulty_confirm_{{ query.id }}']:checked");
                                     if (habit_confirm.val() == null) {
-                                        alert('请选择一个偏好预期确认值!');
+                                        alert('Please choose an expectation confirming value!');
                                         $("[name='habit_confirm_{{ query.id }}']").focus();
                                         return
                                     }
                                     if (redundancy_confirm.val() == null) {
-                                        alert('请选择一个冗余度预期确认值!');
+                                        alert('Please check a redundancy button!');
                                         $("[name='redundancy_confirm_{{ query.id }}']").focus();
                                         return
                                     }
                                     if (difficulty_confirm.val() == null) {
-                                        alert('请选择一个困难度预期确认值!');
+                                        alert('Please check a difficulty button!');
                                         $("[name='difficulty_confirm_{{ query.id }}']").focus();
                                         return
                                     }
                                 {% endif %}
                             {% endfor %}
-                            if (confirm("确认提交所有分查询词标注?"))
+                            if (confirm("Are you sure to submit all annotations?"))
                                 $('#query-form').submit();
                         }
                 );
