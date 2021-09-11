@@ -30,12 +30,23 @@ You can add or delete any function on your need. BTW, we are delighted to introd
 Fow now, this toolkit only support the logging on Baidu and Sogou, which are two largest commercial search engines in China. We welcome anyone to implement the support for more search engines such as Google, Bing, Yahoo, and Naver.
 
 ## How to launch
+* As our toolkit use MongoDB to store data, you should first make sure that your django backend has been connected to a running MongoDB engine. Try the following script on Linux OS/MacOS to make sure that you have launched the MongoDB correctly:
+```bash
+cd /usr/local/bin
+sudo ./mongod
+```
+Then open another terminal window and run the following command:
+```bash
+cd /usr/local/bin
+./mongo
+```
+If you have any problems about MongoDB, please refer to this [tutorial](https://www.tutorialspoint.com/mongodb/index.htm).
 
-* Firstly, you should launch the django backend with the following command:
+* You can then launch the django backend with the following command:
 ```bash
 python manage.py runserver 0.0.0.0:8000
 ```
-* Then, install the chrome extension on your Google chrome.  
+* Install the chrome extension on your Google chrome.  
 
 <p align="center">
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/install.png">
