@@ -125,8 +125,8 @@ def send_reset_password_email(request, reset_req):
     try:
         msg.send()
     except smtplib.SMTPException as e:
-        print type(e)
-        print e
+        print (type(e))
+        print (e)
 
 
 
