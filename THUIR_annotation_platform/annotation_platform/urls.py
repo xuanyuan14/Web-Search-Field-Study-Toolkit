@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.urls import include, path
 
 from django.contrib import admin
 from . import views
@@ -9,8 +9,8 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'annotation_platform.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^user/', include('user_system.urls')),
-    url(r'^task/', include('task_manager.urls')),
-    url(r'^$', views.index),
+    path('admin/', admin.site.urls),
+    path('user/', include('user_system.urls')),
+    path('task/', include('task_manager.urls')),
+    path('', views.index),
 ]
