@@ -1,8 +1,8 @@
 # Web-Search-Field-Study-Toolkit
 
 ## Updates 09/17/2021
-Environment compatibility
-Python 3.9.2
+Environment compatibility:  
+Python 3.9.2  
 Django 3.2.7
 
 ### Installation
