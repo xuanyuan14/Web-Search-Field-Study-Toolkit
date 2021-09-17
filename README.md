@@ -5,7 +5,7 @@ Environment compatibility
 Python 3.9.2
 Django 3.2.7
 
-# Installation
+### Installation
 1. run once to initialize
 ```bash
 python manage.py makemigrations
@@ -16,7 +16,7 @@ python manage.py migrate
 python manage.py runserver 127.0.0.1:8000
 ```
 
-# TODO
+### TODO
 1. No query records from search engine
 2. Integration with Google
 3. Closed document search
