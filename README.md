@@ -8,7 +8,8 @@ Django 3.2.7
 ### Installation
 1. run once to initialize
 ```bash
-python manage.py makemigrations
+python manage.py makemigrations user_system
+python manage.py makemigrations task_manager
 python manage.py migrate
 ```
 2. launch the server
