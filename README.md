@@ -104,7 +104,7 @@ var baseUrl = "http://127.0.0.1:8000";
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/error.png">
 </p>
 
-* For Baidu, you should 1) shut down the instance predicton function, and 2) set all SERPs to be opened in a new window. Without these settings, search pages will be updated merely by in-page javascript functions and our toolkit will be failed to record correct information. 
+* For Baidu, you should 1) shut down the instant predicton function, and 2) set all SERPs to be opened in a new window. Without these settings, search pages will be updated merely by in-page javascript functions and our toolkit will fail to record correct information. 
 
 <p align="center">
   <img src="https://github.com/xuanyuan14/Web-Search-Field-Study-Toolkit/blob/master/images/close.png">
