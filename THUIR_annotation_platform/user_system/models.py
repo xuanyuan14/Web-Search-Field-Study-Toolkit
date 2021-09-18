@@ -28,11 +28,12 @@ class KeyGenerator(object):
         self.length = length
 
     def __call__(self):
-        key = sha512(uuid4().hex).hexdigest()[0:self.length]
-        return key
+        key = sha512(uuid4().hex.encode('utf-8')).hexdigest()[0:self.length]
+        return str(key)
 
 
 class User(models.Model):
+    id = models.AutoField(primary_key=True)
     username = models.CharField(unique=True, max_length=50)
     password = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
@@ -49,8 +50,12 @@ class User(models.Model):
 
 
 class ResetPasswordRequest(models.Model):
-    user = models.ForeignKey(User)
-    token = models.CharField(max_length=50, default=KeyGenerator(12))
-    expire = models.IntegerField(default=TimestampGenerator(60*60*30))
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        )
+    token = models.CharField(max_length=50, default=KeyGenerator(12).__call__())
+    expire = models.IntegerField(default=TimestampGenerator(60*60*30).__call__())
 
 

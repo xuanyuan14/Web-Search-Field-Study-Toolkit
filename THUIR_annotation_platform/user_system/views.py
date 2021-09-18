@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.template import RequestContext
@@ -11,7 +11,6 @@ from .models import User, ResetPasswordRequest, TimestampGenerator
 from .utils import *
 
 import datetime
-
 
 @csrf_exempt
 def check(request):
@@ -49,14 +48,14 @@ def login(request):
             error_message = u'表单输入错误'
 
     request.session.set_test_cookie()
-    return render_to_response(
+    return render(
+        request,
         'login.html',
         {
             'form': form,
             'error_message': error_message,
-        },
-        RequestContext(request)
-    )
+        }
+        )
 
 
 def signup(request):
@@ -85,13 +84,13 @@ def signup(request):
         else:
             error_message = form.errors
 
-    return render_to_response(
+    return render(
+        request,
         'signup.html',
         {'form': form,
          'error_message': error_message,
-         },
-        RequestContext(request)
-    )
+        }
+        )
 
 
 def logout(request):
@@ -121,16 +120,16 @@ def info(user, request):
     }
     search_frequency = search_frequency_choices[user.search_frequency]
     search_history = search_history_choices[user.search_history]
-    return render_to_response(
+    return render(
+        request,
         'info.html',
         {
             'cur_user': user,
             'search_frequency': search_frequency,
             'search_history': search_history
             # 'user_group_string': user_group_string
-        },
-        RequestContext(request),
-    )
+        }
+        )
 
 
 @require_login
@@ -164,15 +163,15 @@ def edit_info(user, request):
         else:
             error_message = form.errors
 
-    return render_to_response(
+    return render(
+        request,
         'edit_info.html',
         {
             'cur_user': user,
             'form': form,
             'error_message': error_message,
-        },
-        RequestContext(request),
-    )
+        }
+        )
 
 
 @require_login
@@ -192,15 +191,15 @@ def edit_password(user, request):
         else:
             error_message = form.errors
 
-    return render_to_response(
+    return render(
+        request,
         'edit_password.html',
         {
             'cur_user': user,
             'form': form,
             'error_message': error_message,
-        },
-        RequestContext(request),
-    )
+        }
+        )
 
 
 def forget_password(request):
@@ -224,14 +223,14 @@ def forget_password(request):
         else:
             error_message = form.errors
 
-    return render_to_response(
+    return render(
+        request,
         'forget_password.html',
         {
             'form': form,
             'error_message': error_message,
-        },
-        RequestContext(request),
-    )
+        }
+        )
 
 
 def reset_password(request, token_str):
@@ -241,22 +240,22 @@ def reset_password(request, token_str):
 
     try:
         token = ResetPasswordRequest.objects.get(token=token_str)
-        print TimestampGenerator(0)()
-        print token.expire
+        print (TimestampGenerator(0)())
+        print (token.expire)
         if TimestampGenerator(0)() > token.expire:
             error_message = u'Token已失效，请重新找回密码'
     except ResetPasswordRequest.DoesNotExist:
         error_message = u'链接地址错误，请重新找回密码'
 
     if error_message is not None:
-        return render_to_response(
+        return render(
+            request,
             'reset_password.html',
             {
                 'form': None,
                 'error_message': error_message
-            },
-            RequestContext(request),
-        )
+            }
+            )
 
     if request.method == 'POST':
         form = ResetPasswordForm(request.POST)
@@ -269,25 +268,25 @@ def reset_password(request, token_str):
         else:
             error_message = form.errors
 
-    return render_to_response(
+    return render(
+        request,
         'reset_password.html',
         {
             'form': form,
             'error_message': error_message,
-        },
-        RequestContext(request),
-    )
+        }
+        )
 
 # @require_login
 # def auth_failed(user, request, missing_group):
 #     user_group_string = get_user_groups_string(user.user_groups)
 #     missing_group_string = get_user_groups_string([missing_group])
-#     return render_to_response(
+#     return render(
 #         'auth_failed.html',
 #         {
 #             'cur_user': user,
 #             'user_group_string': user_group_string,
 #             'missing_group_string': missing_group_string,
 #         },
-#         RequestContext(request),
+#         request,
 #     )

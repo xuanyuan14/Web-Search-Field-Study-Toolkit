@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.template import RequestContext
@@ -48,15 +45,16 @@ def task_home(user, request):
     annotation_num = len(Query.objects.filter(user=user, annotation_status=True))
     partition_num = len(Query.objects.filter(user=user, partition_status=True, annotation_status=False))
     remain_num = len(Query.objects.filter(user=user, partition_status=False))
-    return render_to_response(
+    return render(
+        request,
         'task_home.html',
         {
             'cur_user': user,
             'annotation_num': annotation_num,
             'partition_num': partition_num,
             'remain_num': remain_num
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -89,14 +87,15 @@ def task_partition(user, request):
     unannotated_tasks_to_queries = []
     for task in unannotated_tasks:
         unannotated_tasks_to_queries.append((task.id, sorted(Query.objects.filter(user=user, partition_status=True, task_annotation=task), key=lambda item: item.start_timestamp)))
-    return render_to_response(
+    return render(
+        request,
         'task_partition.html',
         {
             'cur_user': user,
             'unpartition_queries_to_pages': unpartition_queries_to_pages,
             'partition_tasks_to_queries': unannotated_tasks_to_queries
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -111,14 +110,15 @@ def annotation_home(user, request):
     for task in annotated_tasks:
         annotated_tasks_to_queries.append((task.id, sorted(Query.objects.filter(user=user, partition_status=True, task_annotation=task), key=lambda item: item.start_timestamp)))
 
-    return render_to_response(
+    return render(
+        request,
         'annotation_home.html',
         {
             'cur_user': user,
             'unannotated_tasks_to_queries': unannotated_tasks_to_queries,
             'annotated_tasks_to_queries': annotated_tasks_to_queries
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -148,14 +148,15 @@ def task_annotation1(user, request, task_id):
     for query in queries:
         queries_to_pages.append((query, sorted(PageLog.objects.filter(user=user, belong_query=query, page_type='SERP'), key=lambda item: item.start_timestamp)))
 
-    return render_to_response(
+    return render(
+        request,
         'task_annotation1.html',
         {
             'cur_user': user,
             'task': task_annotation,
             'queries_to_pages': queries_to_pages
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -187,12 +188,13 @@ def pre_query_annotation(user, request, timestamp):
         # print 'new_query success!'
         return HttpResponse('<html><body><script>window.close()</script></body></html>')
 
-    return render_to_response(
+    return render(
+        request,
         'pre_query_annotation.html',
         {
             'cur_user': user,
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -241,13 +243,14 @@ def query_annotation(user, request, task_id):
             query__annotation.save()
         return HttpResponseRedirect('/task/task_annotation2/'+str(task_id))
 
-    return render_to_response(
+    return render(
+        request,
         'query_annotation.html',
         {
             'cur_user': user,
             'items_list': items_list
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -278,15 +281,16 @@ def task_annotation2(user, request, task_id):
             query.save()
         return HttpResponseRedirect('/task/annotation/')
 
-    return render_to_response(
+    return render(
+        request,
         'task_annotation2.html',
         {
             'cur_user': user,
             'task': task_annotation,
             'queries_to_pages': queries_to_pages,
             'flag': flag
-        },
-        RequestContext(request))
+        }
+        )
 
 
 @require_login
@@ -295,14 +299,14 @@ def show_page(user, request, page_id):
     if len(serp) == 0:
         return HttpResponseRedirect('/task/home/')
     serp = serp[0]
-    return render_to_response(
+    return render(
+        request,
         'show_query.html',
         {
             'query': serp.query_string,
             'html': serp.html,
-        },
-        RequestContext(request)
-    )
+        }
+        )
 
 
 @require_login
@@ -317,27 +321,27 @@ def page_annotation(user, request, page_id):
         if result['id'] not in clicked_ids:
             clicked_ids.append(result['id'])
     if page.origin == 'baidu':
-        return render_to_response(
+        return render(
+            request,
             'page_annotation_baidu.html',
             {
                 'query': page.query_string,
                 'html': page.html,
                 'page_id': page_id,
                 'clicked_ids': clicked_ids
-            },
-            RequestContext(request)
-        )
+            }
+            )
     if page.origin == 'sogou':
-        return render_to_response(
+        return render(
+            request,
             'page_annotation_sogou.html',
             {
                 'query': page.query_string,
                 'html': page.html,
                 'page_id': page_id,
                 'clicked_ids': clicked_ids
-            },
-            RequestContext(request)
-        )
+            }
+            )
 
 
 @csrf_exempt
@@ -346,10 +350,10 @@ def show_me_serp(request, query_id):
     serp = PageLog.objects.filter(belong_query=query, page_id='1')
     serp = serp[0]
     print (serp.id)
-    return render_to_response(
+    return render(
+        request,
         'show_query.html',
         {
             'html': serp.html,
-        },
-        RequestContext(request)
-    )
+        }
+        )

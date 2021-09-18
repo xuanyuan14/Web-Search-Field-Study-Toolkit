@@ -1,5 +1,29 @@
 # Web-Search-Field-Study-Toolkit
 
+## Updates 09/17/2021
+Environment compatibility:  
+Python 3.9.2  
+Django 3.2.7
+
+### Installation
+1. run once to initialize
+```bash
+python manage.py makemigrations user_system
+python manage.py makemigrations task_manager
+python manage.py migrate
+```
+2. launch the server
+```bash
+python manage.py runserver 127.0.0.1:8000
+```
+
+### TODO
+1. No query records from search engine
+2. Integration with Google
+3. Closed document search
+
+-----
+
 Make field study easier to conduct!
 
 [![THUIR](https://img.shields.io/badge/THUIR-ver%201.0-blueviolet)](http://www.thuir.cn)
