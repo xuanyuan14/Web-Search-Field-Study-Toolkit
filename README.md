@@ -1,29 +1,4 @@
 # Web-Search-Field-Study-Toolkit
-
-## Updates 09/17/2021
-Environment compatibility:  
-Python 3.9.2  
-Django 3.2.7
-
-### Installation
-1. run once to initialize
-```bash
-python manage.py makemigrations user_system
-python manage.py makemigrations task_manager
-python manage.py migrate
-```
-2. launch the server
-```bash
-python manage.py runserver 127.0.0.1:8000
-```
-
-### TODO
-1. No query records from search engine
-2. Integration with Google
-3. Closed document search
-
------
-
 Make field study easier to conduct!
 
 [![THUIR](https://img.shields.io/badge/THUIR-ver%201.0-blueviolet)](http://www.thuir.cn)
@@ -50,6 +25,10 @@ This codebase contains source-code of the field study platform of our WWW 2021 p
 
 You can add or delete any function on your need. BTW, we are delighted to introduce the dataset we collected via this toolkit: [TianGong-Qref](http://www.thuir.cn/tiangong-qref/). 🤠
 
+## Environment compatibility  
+* Python>=2.7  
+* Django>=1.8.3
+
 ## Support
 Fow now, this toolkit only support the logging on Baidu and Sogou, which are two largest commercial search engines in China. We welcome anyone to implement the support for more search engines such as Google, Bing, Yahoo, and Naver.
 
@@ -65,7 +44,12 @@ cd /usr/local/bin
 ./mongo
 ```
 If you have any problems about MongoDB, please refer to this [tutorial](https://www.tutorialspoint.com/mongodb/index.htm).
-
+* To initialize the MongoDB database:
+```bash
+python manage.py makemigrations user_system
+python manage.py makemigrations task_manager
+python manage.py migrate
+```
 * You can then launch the django backend with the following command:
 ```bash
 python manage.py runserver 0.0.0.0:8000
